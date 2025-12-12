@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>index</title>
+    <title>login</title>
     <style>
         .Sesion{
             display: block;
@@ -36,7 +36,16 @@
     <input type="password" placeholder="Ingrese contraseña"><br><br>
     <button onclick="iniciarsesion()">Iniciar sesion</button><br><br>
     <button onclick="registro()">Registrate</button>
+
+    <h1>
+        <?php
+                        include_once 'conexion.php';
+                        // Llamar al método de consulta
+                        $resultado = Cconexion::ConexionBD();
+                        ?>
+    </h1>
     </div>
+
     <script>
         function iniciarsesion(){
             alert("Iniciando sesion");
