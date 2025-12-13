@@ -1,0 +1,75 @@
+.content{
+    min-height: 100vh;
+    padding: 60px 30px;
+    background:
+        radial-gradient(circle at top right, rgba(75,181,130,0.25), transparent 60%),
+        radial-gradient(circle at bottom left, rgba(50,141,78,0.2), transparent 60%),
+        linear-gradient(135deg, #f4f7fb, #e9f0ff);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    transition: 0.4s ease;
+}
+
+body.con-sidebar .content{
+    margin-left: 80px;
+    width: calc(100% - 80px);
+}
+
+.hero{
+    background: linear-gradient(135deg, #328d4e, #4bb582);
+    color: white;
+    padding: 70px 50px;
+    border-radius: 30px;
+    max-width: 1000px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 80px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+
+.btn-hero{
+    margin-top: 30px;
+    padding: 14px 40px;
+    font-size: 17px;
+    border-radius: 40px;
+    border: none;
+    background: white;
+    color: #328d4e;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-hero:hover{
+    transform: translateY(-2px);
+}
+
+.info,
+.beneficios{
+    max-width: 900px;
+    width: 100%;
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.beneficios-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.card{
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.card:hover{
+    transform: translateY(-8px);
+}

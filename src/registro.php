@@ -3,84 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Registro</title>
-<style>
-    body{
-        font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        background: #f8f8f8;
-    }
-    .Tit{
-        text-align: center;
-        margin-bottom: 30px;
-    }
-    .contenedor{
-        display: flex;
-        gap: 60px;
-    }
-    .columna{
-        display: flex;
-        flex-direction: column;
-        width: 250px;
-    }
-    .columna h3{
-        margin: 10px 0 5px;
-        font-size: 14px;
-        color: #000000;
-    }
-    input{
-        padding: 10px;
-        border: 1px solid #000000;
-        border-radius: 6px;
-        outline: none;
-    }
-    .Conductor{
-        border: none;
-        background: #ffffff;
-        color: #000;
-        cursor: pointer;
-        width: 120px;            
-        padding: 10px;
-        border-radius: 10px;
-        display: flex;
-        flex-direction: column; 
-        align-items: center;
-        gap: 5px;
-        margin-bottom: 15px;
-        box-shadow: 0 0 5px rgba(0,0,0,0.2);
-    }
-
-    .Conductor img{
-        width: 50px;
-        height: 50px;
-    }
-
-    .Conductor:hover {
-        background-color: #e4e4e4;
-    }
-    
-    button{
-        margin-top: 30px;
-        padding: 12px 20px;
-        border: none;
-        background: #000000;
-        color: white;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-    button:hover {
-        background-color: #525252;
-    }
-</style>
+<link rel="stylesheet" href="CSS/Estilos.css">
 </head>
 <body>
+    <div class="card">
     <div class="Tit">
         <h1>REGÍSTRATE</h1>
-        <h4>¿Ya estás registrado? Inicia sesión</h4>
+        <h4 onclick="login()">¿Ya estás registrado? Inicia sesión</h4>
     </div>
 
     <div class="contenedor">
@@ -107,6 +36,8 @@
             <input type="password" placeholder="Contraseña">
             <h3>Repite la contraseña</h3>
             <input type="password" placeholder="Contraseña">
+                <button onclick="formulario2()">Siguiente</button>
+
     </div>
     <div class="columna">
         <h3>¿Como te quieres registrar?</h3>
@@ -118,10 +49,13 @@
         Pasajero</button>
         </div>
     </div>
-    <button onclick="formulario2()">Siguiente</button>
+    </div>
     <script>
         function formulario2(){
-            window.open("Registrofo.html");
+            window.open("registrofo.php");
+        }
+         function login(){
+            window.open("login.php");
         }
     </script>
 </body>

@@ -1,0 +1,38 @@
+.content {
+    max-width: 600px;
+    margin: 120px auto;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 12px;
+    text-align: center;
+
+    /* SOMBRA */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.content h1 {
+    margin-bottom: 10px;
+}
+
+.content h2 {
+    margin-bottom: 30px;
+    color: #555;
+}
+
+/* ===== BOTÓN ===== */
+.content button {
+    border: none;
+    background: #2e7d32;
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.content button img {
+    width: 40px;
+    height: 40px;
+}
+
+.content button:hover {
+    background: #256528;
+}

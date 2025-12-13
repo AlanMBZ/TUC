@@ -62,7 +62,7 @@
     <button class="subir" onclick="subirf()">SUBIR</button>
 <script>
     function iniciarsesion(){
-            window.open("index.html");
+            window.open("index.php");
         }
     function subirf(){
         alert("SE HA REGISTRADO EXITOSAMENTE");

@@ -1,0 +1,178 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+#menu-toggle {
+    display: none;
+}
+
+.toggle-btn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 3;
+}
+
+/* SIDEBAR */
+.sidebar {
+    height: 100%;
+    width: 70px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #000;
+    transition: 0.4s;
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+}
+
+#menu-toggle:checked ~ .sidebar {
+    width: 250px;
+}
+
+/* USUARIO */
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 10px;
+    border-bottom: 1px solid #222;
+}
+
+.user-info img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #fff;
+    padding: 3px;
+    transition: 0.3s;
+}
+
+.user-text {
+    display: none;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.user-name {
+    color: #fff;
+    font-weight: bold;
+}
+
+.user-role {
+    color: #aaa;
+    font-size: 12px;
+}
+
+/* USUARIO ABIERTO */
+#menu-toggle:checked ~ .sidebar .user-info {
+    justify-content: flex-start;
+}
+
+#menu-toggle:checked ~ .sidebar .user-text {
+    display: flex;
+}
+
+#menu-toggle:checked ~ .sidebar .user-info img {
+    width: 45px;
+    height: 45px;
+}
+
+/* LINKS */
+.sidebar a {
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #818181;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.sidebar a img {
+    width: 28px;
+    height: 28px;
+}
+
+.sidebar a span {
+    display: none;
+}
+
+#menu-toggle:checked ~ .sidebar a span {
+    display: inline;
+}
+
+.menu-links {
+    flex: 1;
+}
+
+/* SALIR */
+.logout {
+    margin-top: auto;
+    border-top: 1px solid #222;
+    color: #ff6b6b;
+}
+
+/* CERRAR */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 35px;
+    cursor: pointer;
+    color: white;
+    opacity: 0;
+}
+
+#menu-toggle:checked ~ .sidebar .close-btn {
+    opacity: 1;
+}
+
+/* CONTENIDO */
+.cuadro-principal {
+    margin-left: 80px;
+    padding: 40px;
+}
+
+.contenedor {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+}
+
+.columna {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+button {
+    padding: 10px;
+}
+
+.btn-enviar {
+    background: #000;
+    color: #fff;
+}
+
+.content{
+    text-align: center;
+    margin-top: 80px;
+}
+.Tit {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+p{
+    text-align: center;      
+    margin: 0 auto;          
+    max-width: 800px;        
+}

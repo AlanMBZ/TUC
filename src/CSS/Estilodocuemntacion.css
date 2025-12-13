@@ -1,0 +1,91 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f8f8f8;
+}
+
+/* ---------- CUADRO PRINCIPAL ---------- */
+
+.cuadro-principal {
+    background: #ffffff;
+    width: fit-content;
+    margin: 60px auto;
+    padding: 25px 40px;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------- TITULO ---------- */
+
+.Tit {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* ---------- CONTENEDOR ---------- */
+
+.contenedor {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+}
+
+/* ---------- COLUMNAS ---------- */
+
+.columna {
+    display: flex;
+    flex-direction: column;
+    width: 260px;
+    gap: 10px;
+}
+
+/* ---------- IMAGEN ---------- */
+
+.img-auto {
+    width: 100%;
+    max-width: 220px;
+    margin: auto;
+}
+
+/* ---------- TEXTOS ---------- */
+
+.columna h3 {
+    margin: 6px 0 2px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* ---------- BOTONES ---------- */
+
+button {
+    padding: 8px 12px;
+    height: 38px;
+    border: none;
+    background: #000;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #525252;
+}
+
+button img {
+    width: 18px;
+    height: 18px;
+}
+
+/* ---------- BOTÓN ENVIAR ---------- */
+
+.btn-enviar {
+    margin: 20px auto 0;
+    width: 220px;
+    font-weight: bold;
+}

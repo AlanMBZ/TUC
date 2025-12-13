@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once 'function/conexion.php';
-include_once 'function/validar_login.php';
+include_once 'conexion.php';
+include_once 'validar_login.php';
 
 $mensaje = ""; // ← SIEMPRE definida
 
@@ -21,10 +21,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['rol'] = $usuario['rol'];
 
             if ($usuario['rol'] == 1) {
-                header("Location: inicioconductor.php");
+                header("Location: conductor.php");
                 exit;
             } elseif ($usuario['rol'] == 2) {
-                header("Location: iniciopasajero.php");
+                header("Location: pasajero.php");
                 exit;
             }
         } else {
@@ -34,29 +34,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 ?>
 
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="CSS/Estilosesion.css">
 </head>
 
 <body>
     <div class="Sesion">
-        <form method="POST">
-            <h1>INICIAR SESION / REGISTRATE</h1>
+        <h1>INICIAR SESIÓN</h1>
 
-            <H4>Inicia sesion para continuar</H4>
-            <h2>Usuario:</h2>
-            <input type="email" placeholder="Ingresa usuario" name="correo" required>
-            <h2>Contraseña:</h2>
-            <input type="password" placeholder="Ingrese contraseña" name="contrasena" required><br><br>
-            <button type="submit">Iniciar sesion</button><br><br>
-            
+        <form method="POST">
+            <h2>Usuario</h2>
+            <input type="email" name="correo" required>
+            <h2>Contraseña</h2>
+            <input type="password" name="contrasena" required>
+            <button type="submit">Iniciar sesión</button>
         </form>
+
         <button onclick="registro()">Registrate</button>
     </div>
 
@@ -68,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <script>
         function registro() {
-            window.open("registro.php");
+            window.open("menu_usuario.php");
         }
     </script>
 </body>
