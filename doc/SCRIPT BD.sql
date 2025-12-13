@@ -21,6 +21,14 @@ INSERT INTO usuario VALUES(202220023,
 						   '2004-05-13',
 						   1,
 						   'CREDENCIAL A INTEGRAR')
+INSERT INTO usuario VALUES(202220024,
+						   'Alan Arturo',
+						   'Pedroza', 'Espinosa',
+						   'alan200471@hotmail.com',
+						   'alan007w',
+						   '2004-05-13',
+						   2,
+						   'CREDENCIAL A INTEGRAR')
 
 SELECT * FROM usuario
 
