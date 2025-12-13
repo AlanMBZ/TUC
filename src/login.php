@@ -1,57 +1,54 @@
+<?php
+include_once 'conexion.php';
+include_once 'validar_login.php';
+
+$mensaje = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $usuario = $_POST['usuario'];
+    $contrasena = $_POST['contrasena'];
+
+    if (Cvalidar_login::validarUsuario($usuario, $contrasena)) {
+        $mensaje = "Inicio de sesión correcto";
+    } else {
+        $mensaje = "Usuario o contraseña incorrectos";
+    }
+}
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
-    <style>
-        .Sesion{
-            display: block;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        button{
-            border: none;
-            color: white;
-            padding: 10px 40px;
-            border-radius: 5px;
-            background-color: #000000;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-        background-color: #525252;
-        }
-    </style>
+    <title>Login</title>
 </head>
+
 <body>
     <div class="Sesion">
-    <h1>INICIAR SESION / REGISTRATE</h1>
-    <H4>Inicia sesion para continuar</H4>
-    <h2>Usuario</h2>
-    <input type="text" placeholder="Ingresa usuario">
-    <h2>Contraseña:</h2>
-    <input type="password" placeholder="Ingrese contraseña"><br><br>
-    <button onclick="iniciarsesion()">Iniciar sesion</button><br><br>
-    <button onclick="registro()">Registrate</button>
+        <h1>INICIAR SESIÓN</h1>
 
-    <h1>
-        <?php
-                        include_once 'conexion.php';
-                        // Llamar al método de consulta
-                        $resultado = Cconexion::ConexionBD();
-                        ?>
-    </h1>
+        <form method="POST">
+            <h2>Usuario</h2>
+            <input type="text" name="usuario" required>
+
+            <h2>Contraseña</h2>
+            <input type="password" name="contrasena" required><br><br>
+
+            <button type="submit">Iniciar sesión</button>
+        </form>
+
+        <button onclick="registro()">Registrate</button>
     </div>
 
+    <?php if ($mensaje != ""): ?>
+        <script>
+            alert("<?php echo $mensaje; ?>");
+        </script>
+    <?php endif; ?>
+
     <script>
-        function iniciarsesion(){
-            alert("Iniciando sesion");
-        }
-        function registro(){
-            window.open("Registro.html");
+        function registro() {
+            window.open("subir_identificacion.php");
         }
     </script>
 </body>
