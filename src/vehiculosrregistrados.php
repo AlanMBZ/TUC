@@ -67,10 +67,46 @@
     </div>
 </aside>
 
+<?php
+require_once(__DIR__ . '/function/conexion.php');
+try {
+    $conn = Cconexion::ConexionBD();
+    $stmt = $conn->query("SELECT matricula, marca, modelo, anio, placas, color, tipo, capacidad, estado FROM vehiculo");
+    $vehiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    echo "<div style='color:red'>Error al conectar o consultar la base de datos.</div>";
+    $vehiculos = [];
+}
+?>
 <div class="cuadro-principal">
 <div class="Tit">
     <h1>Vehículo</h1>
 </div>
+
+<?php if ($vehiculos): ?>
+    <table border="1" cellpadding="6" style="margin:20px 0;width:100%;background:#fff;">
+        <tr>
+            <th>Matrícula</th><th>Marca</th><th>Modelo</th><th>Año</th><th>Placas</th>
+            <th>Color</th><th>Tipo</th><th>Capacidad</th><th>Estado</th>
+        </tr>
+        <?php foreach ($vehiculos as $v): ?>
+        <tr>
+            <td><?= htmlspecialchars($v['matricula']) ?></td>
+            <td><?= htmlspecialchars($v['marca']) ?></td>
+            <td><?= htmlspecialchars($v['modelo']) ?></td>
+            <td><?= htmlspecialchars($v['anio']) ?></td>
+            <td><?= htmlspecialchars($v['placas']) ?></td>
+            <td><?= htmlspecialchars($v['color']) ?></td>
+            <td><?= htmlspecialchars($v['tipo']) ?></td>
+            <td><?= htmlspecialchars($v['capacidad']) ?></td>
+            <td><?= htmlspecialchars($v['estado']) ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+<?php else: ?>
+    <div style="margin:20px 0;">No hay vehículos registrados.</div>
+<?php endif; ?>
+
 <div class="contenedor">
 
     <div class="columna">
