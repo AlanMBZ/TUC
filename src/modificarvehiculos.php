@@ -141,7 +141,7 @@
         window.open("vehiculo.php");
     }
      function inicio(){
-        window.open("inicio.php");
+        window.open("inicioconductor.php");
     }
 </script>
 </body>
