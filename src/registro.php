@@ -53,12 +53,12 @@
     <div class="columna">
         <h3>¿Como te quieres registrar?</h3>
 
-        <button type="button" class="Conductor" onclick="seleccionarRol(2)">
+        <button type="button" class="Conductor" onclick="seleccionarRol(1)">
             <img src="https://cdn-icons-png.flaticon.com/512/552/552721.png" width="60" height="60">
             Conductor
         </button>
 
-        <button type="button" class="Conductor" onclick="seleccionarRol(1)">
+        <button type="button" class="Conductor" onclick="seleccionarRol(2)">
             <img src="https://cdn-icons-png.flaticon.com/512/552/552721.png" width="60" height="60">
             Pasajero
         </button>
@@ -76,7 +76,7 @@ function login(){
 
 function seleccionarRol(valor){
     document.getElementById("rol").value = valor;
-    alert(valor == 2 ? "Rol seleccionado: Conductor" : "Rol seleccionado: Pasajero");
+    alert(valor == 2 ? "Rol seleccionado: Pasajero" : "Rol seleccionado: Conductor");
 }
 
 document.getElementById("formRegistro").addEventListener("submit", function(e){
