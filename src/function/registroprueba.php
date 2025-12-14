@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $apellidoP  = $_POST['apaterno'];
     $apellidoM  = $_POST['amaterno'];
     $correo     = $_POST['correo'];
-    $password   = $_POST['password']; // SIN ENCRIPTAR
+    $password   = $_POST['password']; 
     $fecha      = $_POST['fecha_nac'];
     $rol        = $_POST['rol'];
     $credencial = 'pendiente';
@@ -44,6 +44,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $credencial
     ]);
 
-    header("Location: ../login.php?registro=ok");
-    exit;
+session_start();
+
+$_SESSION['matricula'] = $matricula;
+$_SESSION['rol'] = $rol;
+
+header("Location: ../../registrofo.php");
+exit;
+
 }
