@@ -52,7 +52,7 @@
             <div class="contenedor">
                 <div class="columna">
                     <h3>NIV:</h3>
-                    <input type="text" name="matricula" placeholder="Ingrese el NIV" required>
+                    <input type="text" name="niv" placeholder="Ingrese el NIV" required>
                     <h3>Marca:</h3>
                     <input type="text" name="marca" placeholder="Marca del vehículo" required>
                     <h3>Modelo:</h3>
@@ -71,8 +71,6 @@
                     <input type="text" name="tipo" placeholder="Tipo vehículo">
                     <h3>Capacidad de pasajeros:</h3>
                     <input type="text" name="capacidad" placeholder="Capacidad de pasajeros">
-                    <h3>Tipo:</h3>
-                    <input type="text" name="estado" placeholder="Tipo de vehículo">
                     <div class="botones-inferiores">
                         <button type="submit">Registrar vehículo</button>
                     </div>
