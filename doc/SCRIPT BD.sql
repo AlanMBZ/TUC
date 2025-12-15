@@ -49,7 +49,7 @@ CREATE TABLE autos(idconductor INT NOT NULL,
 				   marca NVARCHAR(100) NOT NULL,
 				   fechaalta DATE NOT NULL,
 				   capacidad INT NOT NULL,
-				   año INT NOT NULL,
+				   aÃ±o INT NOT NULL,
 				   tipo NVARCHAR(100) NOT NULL,
 				   CONSTRAINT pk_Placa PRIMARY KEY (placa),
 				   CONSTRAINT fk_IdConductor FOREIGN KEY (idconductor) REFERENCES conductor(idconductor))

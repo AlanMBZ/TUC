@@ -48,7 +48,7 @@
             <div style="color:green; padding:10px;">Vehículo registrado correctamente.</div>
         <?php endif; ?>
 
-        <form method="post" action="function/pruebavehiculos.php">
+        <form method="POST" action="function/pruebavehiculos.php">
             <div class="contenedor">
                 <div class="columna">
                     <h3>NIV:</h3>
