@@ -11,7 +11,7 @@ class Cconexion{
     
         try {
             $conn = new PDO ("sqlsrv:Server=$host,$puerto;Database=$db",$user,$password);
-            echo "Conexión exitosa a la base de datos: $db";
+            //echo "Conexión exitosa a la base de datos: $db";
             return $conn;
             
         } catch (PDOException $exp) {
