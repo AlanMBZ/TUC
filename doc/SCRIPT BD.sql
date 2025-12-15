@@ -38,7 +38,18 @@ CREATE TABLE conductor(idconductor INT NOT NULL,
 					   nolicencia NVARCHAR(50) NOT NULL,
 					   CONSTRAINT pk_IdConductor PRIMARY KEY (idconductor),
 					   CONSTRAINT fk_Matricula FOREIGN KEY (matricula) REFERENCES usuario(matricula))
-					   
+
+INSERT INTO conductor (
+    idconductor,
+    matricula,
+    nolicencia
+)
+VALUES (
+    1,                  -- idconductor (PK)
+    202220023,           -- matricula existente en usuario
+    'LIC-ABC-123456'     -- número de licencia
+);
+
 SELECT * FROM conductor
 
 CREATE TABLE autos(idconductor INT NOT NULL,
@@ -55,6 +66,51 @@ CREATE TABLE autos(idconductor INT NOT NULL,
 				   CONSTRAINT fk_IdConductor FOREIGN KEY (idconductor) REFERENCES conductor(idconductor))
 
 SELECT * FROM autos
+INSERT INTO autos (
+    idconductor,
+    placa,
+    niv,
+    color,
+    modelo,
+    marca,
+    capacidad,
+    año,
+    tipo
+)
+VALUES (
+    1,                     -- idconductor existente
+    'ABC-1234',             -- placa (PK)
+    'NIV1234567890',        -- NIV
+    'Rojo',                 -- color
+    'Corolla',              -- modelo
+    'Toyota',               -- marca
+    5,                      -- capacidad
+    2022,                   -- año
+    'Sedán'                 -- tipo
+);
+
+INSERT INTO autos (
+    idconductor,
+    placa,
+    niv,
+    color,
+    modelo,
+    marca,
+    capacidad,
+    año,
+    tipo
+)
+VALUES (
+    1,                     -- idconductor existente
+    'ABC-1235',             -- placa (PK)
+    'NIV1234561890',        -- NIV
+    'Rojo',                 -- color
+    'Corolla',              -- modelo
+    'Toyota',               -- marca
+    5,                      -- capacidad
+    2022,                   -- año
+    'Sedán'                 -- tipo
+);
 
 CREATE TABLE rutas(idruta INT NOT NULL,
 				   idconductor INT NOT NULL,
