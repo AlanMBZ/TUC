@@ -229,7 +229,7 @@ $autos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td><?= htmlspecialchars($auto['fechaalta']) ?></td>
                         <td class="acciones">
                             <!-- BOTÓN EDITAR -->
-                            <a href="editarvehiculo.php?placa=<?= urlencode($auto['placa']) ?>" class="btn-editar">Editar</a>
+                            <a href="modificarvehiculos.php?placa=<?= urlencode($auto['placa']) ?>"class="btn-editar">Editar</a>
 
                             <!-- BOTÓN ELIMINAR -->
                             <form method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar este vehículo?');" style="display:inline;">

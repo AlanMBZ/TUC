@@ -49,7 +49,7 @@ session_start();
 $_SESSION['matricula'] = $matricula;
 $_SESSION['rol'] = $rol;
 
-header("Location: ../../registrofo.php");
+header("Location: ../registrofo.php");
 exit;
 
 }

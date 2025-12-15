@@ -103,6 +103,7 @@ async function uploadFile() {
         status.textContent = 'Error al subir archivo.';
         console.error(err);
     }
+    window.open("login.php");
 }
 
 document.getElementById('credencial').addEventListener('change', function(e){

@@ -1,55 +1,77 @@
 <?php
-require_once('function/conexion.php');
+session_start();
+require_once('conexion.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $matricula = trim($_POST['matricula'] ?? '');
+    $niv       = trim($_POST['niv'] ?? '');
     $marca     = trim($_POST['marca'] ?? '');
     $modelo    = trim($_POST['modelo'] ?? '');
     $anio      = trim($_POST['anio'] ?? '');
-    $placas    = trim($_POST['placas'] ?? '');
+    $placa     = trim($_POST['placas'] ?? '');
     $color     = trim($_POST['color'] ?? '');
     $tipo      = trim($_POST['tipo'] ?? '');
     $capacidad = trim($_POST['capacidad'] ?? '');
-    $estado    = trim($_POST['estado'] ?? '');
 
-    $required = ['matricula','marca','modelo','anio','placas'];
+    $required = ['niv','marca','modelo','anio','placas','color','tipo','capacidad'];
     foreach ($required as $r) {
         if (empty($_POST[$r])) {
-            header('Location: registrovehiculo.php?error=missing');
+            header('Location: ../registrovehiculo.php?error=missing');
             exit;
         }
     }
 
+    if (!isset($_SESSION['matricula'])) {
+        header('Location: ../registrovehiculo.php?error=sesion');
+        exit;
+    }
+    $matricula = $_SESSION['matricula'];
+
     try {
         $conn = Cconexion::ConexionBD();
 
-        $check = $conn->prepare('SELECT COUNT(*) FROM vehiculo WHERE matricula = ? OR placas = ?');
-        $check->execute([$matricula, $placas]);
+        $stmt = $conn->prepare('SELECT idconductor FROM conductor WHERE matricula = ?');
+        $stmt->execute([$matricula]);
+        $idconductor = $stmt->fetchColumn();
+
+        if (!$idconductor) {
+            // Crear registro en conductor si no existe
+            // Se requiere un número de licencia, aquí puedes pedirlo en el formulario o asignar uno temporal
+            $nolicencia = isset($_POST['nolicencia']) ? trim($_POST['nolicencia']) : 'SIN-LICENCIA';
+            // Obtener nuevo idconductor
+            $id = $conn->query("SELECT ISNULL(MAX(idconductor),0)+1 FROM conductor")->fetchColumn();
+            $sqlInsert = "INSERT INTO conductor (idconductor, matricula, nolicencia) VALUES (?, ?, ?)";
+            $stmtInsert = $conn->prepare($sqlInsert);
+            $stmtInsert->execute([$id, $matricula, $nolicencia]);
+            $idconductor = $id;
+        }
+
+        $check = $conn->prepare('SELECT COUNT(*) FROM autos WHERE placa = ? OR niv = ?');
+        $check->execute([$placa, $niv]);
         if ($check->fetchColumn() > 0) {
-            header('Location: registrovehiculo.php?error=duplicado');
+            header('Location: ../registrovehiculo.php?error=duplicado');
             exit;
         }
 
-        $sql = "INSERT INTO vehiculo (matricula, marca, modelo, anio, placas, color, tipo, capacidad, estado)
+        $sql = "INSERT INTO autos (idconductor, placa, niv, color, modelo, marca, capacidad, año, tipo)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->execute([
-            $matricula,
-            $marca,
-            $modelo,
-            $anio,
-            $placas,
+            $idconductor,
+            $placa,
+            $niv,
             $color,
-            $tipo,
+            $modelo,
+            $marca,
             $capacidad,
-            $estado
+            $anio,
+            $tipo
         ]);
 
-        header('Location: vehiculosrregistrados.php?success=1');
+        header('Location: ../vehiculo.php?success=1');
         exit;
 
     } catch (Exception $e) {
-        header('Location: registrovehiculo.php?error=server');
+        header('Location: ../registrovehiculo.php?error=server');
         exit;
     }
 }
