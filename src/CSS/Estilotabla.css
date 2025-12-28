@@ -1,0 +1,40 @@
+.tabla{
+    width: 100%;
+    max-width: 700px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: rgb(219, 214, 214);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+th, td{
+    padding: 15px 20px;
+    font-weight: bold;
+    text-align: center;
+}
+thead tr {
+    background-color: rgb(24, 142, 42);
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+}
+tbody tr:nth-child(even){
+    background-color: #529754;
+}
+tbody tr:hover{
+    background-color: #7d7f7df7;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+tbody tr:last-of-type{
+    border-bottom: 2px solid #009842;
+}
+.btn-eliminar{
+    background: #090909;
+}
+.btn-eliminar:hover{
+    background: #8e8b8b;
+}

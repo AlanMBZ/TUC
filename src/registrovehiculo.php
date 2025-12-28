@@ -22,6 +22,8 @@
             </div>
         </div>
 
+        <script src="function/pantallas.js"></script>
+
         <div class="menu-links">
             <a href="#inicio">
                 <img src="https://marketplace.canva.com/eGqLY/MAGPH-eGqLY/1/tl/canva-round-house-icon-MAGPH-eGqLY.png">
@@ -45,18 +47,9 @@
 
             <a href="#ruta">
                 <img src="https://cdn-icons-png.flaticon.com/512/599/599129.png">
-                <span>Rutas</span>
+                <span onclick="Formularioruta()">Rutas</span>
             </a>
 
-            <a href="#ajustes">
-                <img src="https://cdn-icons-png.flaticon.com/512/456/456167.png">
-                <span>Ajustes</span>
-            </a>
-
-            <a href="#ayuda">
-                <img src="https://cdn.iconscout.com/icon/free/png-256/free-ayuda-icon-svg-download-png-2598199.png">
-                <span>Ayuda</span>
-            </a>
         </div>
         <div class="menu-links">
             <a href="#salir" class="logout">
@@ -111,13 +104,5 @@
     </div>
     </div>
 
-    <script>
-    function vehiculo(){
-        window.open("vehiculo.php");
-    }
-     function inicio(){
-        window.open("inicioconductor.php");
-    }
-    </script>
 </body>
 </html>
