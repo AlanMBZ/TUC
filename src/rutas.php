@@ -47,7 +47,7 @@
 
             <a href="#viaje">
                 <img src="https://cdn-icons-png.flaticon.com/512/3731/3731420.png">
-                <span>Viaje</span>
+                <span onclick="viajes()">Viaje</span>
             </a>
 
             <a href="#ruta">
