@@ -1,3 +1,45 @@
+<?php
+session_start();
+require_once('function/conexion.php');
+
+if (!isset($_SESSION['matricula'])) {
+    header("Location: login.php");
+    exit;
+}
+
+$conexion = Cconexion::ConexionBD();
+$matricula = $_SESSION['matricula'];
+
+$sql = "SELECT nombres, apellidoP, apellidoM, fechanacimiento, matricula, correo, rol 
+        FROM usuario 
+        WHERE matricula = :matricula";
+
+$stmt = $conexion->prepare($sql);
+$stmt->bindParam(':matricula', $matricula, PDO::PARAM_INT);
+$stmt->execute();
+
+$usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$usuario) {
+    echo "Usuario no encontrado";
+    exit;
+}
+//-------------------------LLAMADO DE IMAGEN DE PERFIL-------------------------//
+$directorio = "../img/";
+$extensiones = ['jpg', 'jpeg', 'png'];
+
+$imagenPerfil = $directorio . "default.png"; // Imagen por defecto
+
+foreach ($extensiones as $ext) {
+    $ruta = $directorio . "credencial_" . $matricula . "." . $ext;
+    if (file_exists($ruta)) {
+        $imagenPerfil = $ruta;
+        break;
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,18 +110,67 @@
         </div>
         <div class="contenedor">
             <div class="columna">
-                <img src="https://cdn-icons-png.flaticon.com/512/552/552721.png">
+                <img src="<?= $imagenPerfil ?>" alt="Foto de perfil" class="foto-perfil" style="width: 250px; height: 300px; border-radius: 5%; object-fit: cover;">
+
+
             </div>
             <div class="columna">
-                <h3>Apelido paterno</h3>
-                <h3>Apellido materno</h3>
-                <h3>Fecha de nacimiento</h3>
-                <h3>Matricula</h3>
-                <h3>Correo electronico</h3>
-                <h3>Rol</h3>
+                <h3><strong>Nombre(s):</strong></h3>
+                <?= htmlspecialchars($usuario['nombres']) ?>
+                <h3><strong>Apellido paterno:</strong></h3>
+                <?= htmlspecialchars($usuario['apellidoP']) ?>
+                <h3><strong>Apellido materno:</strong></h3>
+                <?= htmlspecialchars($usuario['apellidoM']) ?>
+                <h3><strong>Fecha de nacimiento:</strong></h3>
+                <?= $usuario['fechanacimiento'] ?>
+                <h3><strong>Matrícula:</strong></h3>
+                <?= $usuario['matricula'] ?>
+
+                <h3>
+                    <strong>Correo electrónico:</strong>
+                </h3>
+                    <span id="correo-texto">
+                        <?= htmlspecialchars($usuario['correo']) ?>
+                    </span>
+
+                    <form id="correo-form" action="function/actualizar_correo.php" method="POST" style="display:none;">
+                        <input type="email" name="correo" value="<?= htmlspecialchars($usuario['correo']) ?>" required style="border-radius: 5px; padding: 5px;">
+                        <br><br>
+                        
+                        <button type="submit">Guardar</button>
+                        <br>
+                        <button type="button" onclick="cancelarEdicion()">Cancelar</button>
+                        
+                    </form>
+
+                    <button id="btn-modificar" onclick="editarCorreo()">Modificar</button>
+                
+
+
+                <h3><strong>Rol:</strong></h3>
+                <?php
+                if ($usuario['rol'] == 1) {
+                    echo "Conductor";
+                } else {
+                    echo "Pasajero";
+                } ?>
+
             </div>
         </div>
+    </div>
+    <script>
+        function editarCorreo() {
+            document.getElementById('correo-texto').style.display = 'none';
+            document.getElementById('btn-modificar').style.display = 'none';
+            document.getElementById('correo-form').style.display = 'inline';
+        }
 
+        function cancelarEdicion() {
+            document.getElementById('correo-form').style.display = 'none';
+            document.getElementById('correo-texto').style.display = 'inline';
+            document.getElementById('btn-modificar').style.display = 'inline';
+        }
+    </script>
 </body>
 
 </html>
