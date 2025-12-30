@@ -32,7 +32,7 @@
 
         <a href="#perfil">
             <img src="https://cdn-icons-png.flaticon.com/512/848/848006.png">
-            <span>Perfil</span>
+            <span onclick="perfil()">Perfil</span>
         </a>
 
         <a href="#vehiculos">
@@ -42,23 +42,14 @@
 
         <a href="#viaje">
             <img src="https://cdn-icons-png.flaticon.com/512/3731/3731420.png">
-            <span>Viaje</span>
+            <span onclick="viajes()">Viaje</span>
         </a>
 
         <a href="#ruta">
             <img src="https://cdn-icons-png.flaticon.com/512/599/599129.png">
-            <span>Rutas</span>
+            <span onclick="Formularioruta()">Rutas</span>
         </a>
 
-        <a href="#ajustes">
-            <img src="https://cdn-icons-png.flaticon.com/512/456/456167.png">
-            <span>Ajustes</span>
-        </a>
-
-        <a href="#ayuda">
-            <img src="https://cdn.iconscout.com/icon/free/png-256/free-ayuda-icon-svg-download-png-2598199.png">
-            <span>Ayuda</span>
-        </a>
     </div>
     <div class="menu-links">
     <a href="#salir" class="logout">

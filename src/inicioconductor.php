@@ -44,7 +44,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
 
             <a href="#perfil">
                 <img src="https://cdn-icons-png.flaticon.com/512/848/848006.png">
-                <span>Perfil</span>
+                <span onclick="perfil()">Perfil</span>
             </a>
 
             <a href="#vehiculos">
