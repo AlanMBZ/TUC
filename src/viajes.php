@@ -69,21 +69,21 @@
     <table>
         <thead>
             <tr>
-        <th>FOTO</th>
+        <th>Matricula</th>
         <th>Nombre del estudiante</th>
         <th>Ruta</th>
         </tr>
         </thead>
         <tbody>
             <tr>
-               <td>foto</td>
-               <td>hanna</td>
-               <td>bandera</td>
+               <td>202220326</td>
+               <td>Alan</td>
+               <td>Ecatepec-TESCO</td>
                <td><button>Aceptar</button></td>
                <td><button class="btn-eliminar">Eliminar</button></td>
             </tr>
         </tbody>
-        <button class="btn-eliminar">Eliminar</button>
+
     </table>
     </div>
 </div>
