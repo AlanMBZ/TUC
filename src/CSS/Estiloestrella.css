@@ -22,9 +22,10 @@
 /* ===== BOTÓN ===== */
 .content button {
     border: none;
-    background: #2e7d32;
+    color: rgb(254, 254, 254);
+    background: #000000;
     padding: 15px;
-    border-radius: 50%;
+    border-radius: 10%;
     cursor: pointer;
 }
 
@@ -34,7 +35,7 @@
 }
 
 .content button:hover {
-    background: #256528;
+    background: #4f5150;
 }
 input{
     padding: 10px 15px;

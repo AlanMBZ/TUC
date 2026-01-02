@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 header("Location: inicioconductor.php");
                 exit;
             } elseif ($usuario['rol'] == 2) {
-                header("Location: iniciopasajero.php");
+                header("Location: pasajero/inicioPasajero.php");
                 exit;
             }
         } else {
