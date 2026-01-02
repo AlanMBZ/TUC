@@ -25,7 +25,7 @@ if (!$usuario) {
     exit;
 }
 //-------------------------LLAMADO DE IMAGEN DE PERFIL-------------------------//
-$directorio = "../img/";
+$directorio = "../../img/";
 $extensiones = ['jpg', 'jpeg', 'png'];
 
 $imagenPerfil = $directorio . "default.png"; // Imagen por defecto
