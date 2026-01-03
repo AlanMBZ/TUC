@@ -66,3 +66,16 @@ button:hover{
     background-color: #525252;
     transform: scale(1.05);
 }
+.link-recuperar {
+    color: black;
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+    
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.link-recuperar:hover {
+    text-decoration: underline;
+}

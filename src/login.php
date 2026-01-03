@@ -55,9 +55,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <h2>Contraseña:</h2>
             <input type="password" placeholder="Ingrese contraseña" name="contrasena" required><br><br>
             <button type="submit">Iniciar sesion</button><br><br>
-            
+            <a href="recuperar_contrasena.php" class="link-recuperar" style="color: black;">
+                ¿Olvidaste tu contraseña?
+            </a>
+            <br><br>
+
         </form>
         <button onclick="registro()">Registrate</button>
+
+
     </div>
 
     <?php if ($mensaje != ""): ?>
