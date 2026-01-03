@@ -3,10 +3,10 @@
 class Cconexion{
     static function ConexionBD(){
 
-        $host = 'MSI';
+        $host = 'ALANPEDROZA';
         $db = 'TUC';
         $user = 'sa';
-        $password = '123456';
+        $password = '1234';
         $puerto = 1433;
     
         try {
