@@ -28,34 +28,34 @@
         <script src="function/pantallas.js"></script>
 
         <div class="menu-links">
-            <a href="#inicio">
+            <a href="inicioconductor.php">
                 <img src="https://marketplace.canva.com/eGqLY/MAGPH-eGqLY/1/tl/canva-round-house-icon-MAGPH-eGqLY.png">
-                <span onclick="inicio()">Inicio</span>
+                <span>Inicio</span>
             </a>
 
-            <a href="#perfil">
+            <a href="perfil.php">
                 <img src="https://cdn-icons-png.flaticon.com/512/848/848006.png">
-                <span onclick="perfil()">Perfil</span>
+                <span>Perfil</span>
             </a>
 
-            <a href="#vehiculos">
+            <a href="vehiculo.php">
                 <img src="https://www.nicepng.com/png/full/89-891434_white-car-icon-png-car-icon-green-png.png">
-                <span onclick="vehiculo()">Vehículos</span>
+                <span>Vehículos</span>
             </a>
 
-            <a href="#viaje">
+            <a href="viajes.php">
                 <img src="https://cdn-icons-png.flaticon.com/512/3731/3731420.png">
-                <span onclick="viajes()">Viaje</span>
+                <span>Viaje</span>
             </a>
 
-            <a href="#ruta">
+            <a href="formularioruta.php">
                 <img src="https://cdn-icons-png.flaticon.com/512/599/599129.png">
-                <span onclick="Formularioruta()">Rutas</span>
+                <span>Rutas</span>
             </a>
 
         </div>
         <div class="menu-links">
-            <a href="#salir" class="logout">
+            <a href="login.php" class="logout">
                 <img src="https://cdn-icons-png.flaticon.com/512/16385/16385164.png">
                 <span>Salir</span>
             </a>

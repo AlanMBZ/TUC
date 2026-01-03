@@ -53,7 +53,7 @@ foreach ($extensiones as $ext) {
 </head>
 
 <body>
-
+<script src="direccion.js"></script>
     <input type="checkbox" id="menu-toggle" />
     <label for="menu-toggle" class="toggle-btn">☰</label>
 
@@ -69,27 +69,18 @@ foreach ($extensiones as $ext) {
     </div>
 
     <div class="menu-links">
-        <a href="inicioPasajero.php">
+        <a href="validador.php">
             <img src="https://marketplace.canva.com/eGqLY/MAGPH-eGqLY/1/tl/canva-round-house-icon-MAGPH-eGqLY.png">
             <span>Inicio</span>
         </a>
 
-        <a href="perfilpasajero.php">
+        <a href="perfilvalidador.php">
             <img src="https://cdn-icons-png.flaticon.com/512/848/848006.png">
             <span>Perfil</span>
         </a>
-
-        <a href="viajepasajero.php">
-            <img src="https://www.nicepng.com/png/full/89-891434_white-car-icon-png-car-icon-green-png.png">
-            <span>Viajes</span>
-        </a>
-        <a href="rutaspasajero.php">
-            <img src="https://cdn-icons-png.flaticon.com/512/599/599129.png">
-            <span>Rutas</span>
-        </a>
     </div>
     <div class="menu-links">
-    <a href="../login.php" class="logout">
+    <a href="#salir" class="logout" onclick="salir()">
         <img src="https://cdn-icons-png.flaticon.com/512/16385/16385164.png">
         <span>Salir</span>
     </a>

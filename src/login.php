@@ -26,6 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             } elseif ($usuario['rol'] == 2) {
                 header("Location: pasajero/inicioPasajero.php");
                 exit;
+            } elseif ($usuario['rol'] == 3) {
+                header("Location: validador/validador.php");
+                exit;
             }
         } else {
             $mensaje = "Correo o contraseña incorrectos";
