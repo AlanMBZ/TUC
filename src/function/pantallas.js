@@ -22,4 +22,6 @@ function viajes(){
 function perfil(){
     window.open("perfil.php");
 }
-
+function salir(){
+    window.open("login.php");
+}
