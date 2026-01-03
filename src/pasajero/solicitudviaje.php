@@ -26,27 +26,27 @@
     </div>
 
     <div class="menu-links">
-        <a href="#inicio" onclick="iniciopasajero()">
+        <a href="inicioPasajero.php">
             <img src="https://marketplace.canva.com/eGqLY/MAGPH-eGqLY/1/tl/canva-round-house-icon-MAGPH-eGqLY.png">
             <span>Inicio</span>
         </a>
 
-        <a href="#perfil" onclick="Perfilpasajero()">
+        <a href="perfilpasajero.php">
             <img src="https://cdn-icons-png.flaticon.com/512/848/848006.png">
             <span>Perfil</span>
         </a>
 
-        <a href="#viajes" onclick="Viajepasaje()">
+        <a href="viajepasajero.php">
             <img src="https://www.nicepng.com/png/full/89-891434_white-car-icon-png-car-icon-green-png.png">
             <span>Viajes</span>
         </a>
-        <a href="#ruta" onclick="Rutapasajero()">
+        <a href="rutaspasajero.php">
             <img src="https://cdn-icons-png.flaticon.com/512/599/599129.png">
             <span>Rutas</span>
         </a>
     </div>
     <div class="menu-links">
-    <a href="#salir" class="logout" onclick="salir()">
+    <a href="../login.php" class="logout">
         <img src="https://cdn-icons-png.flaticon.com/512/16385/16385164.png">
         <span>Salir</span>
     </a>

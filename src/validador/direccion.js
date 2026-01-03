@@ -5,5 +5,5 @@ function validador(){
     window.open("validador.php");
 }
 function salir(){
-    window.open("login.php");
+    window.open("../login.php");
 }

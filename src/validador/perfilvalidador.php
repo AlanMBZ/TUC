@@ -69,12 +69,12 @@ foreach ($extensiones as $ext) {
     </div>
 
     <div class="menu-links">
-        <a href="#inicio" onclick="validador()">
+        <a href="validador.php">
             <img src="https://marketplace.canva.com/eGqLY/MAGPH-eGqLY/1/tl/canva-round-house-icon-MAGPH-eGqLY.png">
             <span>Inicio</span>
         </a>
 
-        <a href="#perfil" onclick="perfil()">
+        <a href="perfilvalidador.php">
             <img src="https://cdn-icons-png.flaticon.com/512/848/848006.png">
             <span>Perfil</span>
         </a>
