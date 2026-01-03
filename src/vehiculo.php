@@ -186,11 +186,11 @@ $autos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <main class="content">
         <h1>Bienvenido a TUC</h1>
         <h2>Registre un vehiculo</h2>
-
-        <button onclick="Regisvehiculo()">
-            <img src="https://static.thenounproject.com/png/621382-200.png">
-        </button>
-
+        <a href="registrovehiculo.php">
+            <button onclick="Regisvehiculo()">
+                <img src="https://static.thenounproject.com/png/621382-200.png">
+            </button>
+        </a>
 
         <h2 class="titulo-tabla">Vehículos registrados</h2>
 
@@ -222,7 +222,7 @@ $autos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td><?= htmlspecialchars($auto['fechaalta']) ?></td>
                         <td class="acciones">
                             <!-- BOTÓN EDITAR -->
-                            <a href="modificarvehiculos.php?placa=<?= urlencode($auto['placa']) ?>"class="btn-editar">Editar</a>
+                            <a href="modificarvehiculos.php?placa=<?= urlencode($auto['placa']) ?>" class="btn-editar">Editar</a>
 
                             <!-- BOTÓN ELIMINAR -->
                             <form method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar este vehículo?');" style="display:inline;">
