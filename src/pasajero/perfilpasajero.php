@@ -144,7 +144,31 @@ foreach ($extensiones as $ext) {
 
                 <button id="btn-modificar" onclick="editarCorreo()">Modificar</button>
 
+<h3><strong>Contraseña:</strong></h3>
 
+<span id="contrasena-texto">
+    ********
+</span>
+
+<form id="contrasena-form" action="../function/actualizar_contrasena.php" method="POST" style="display:none;">
+    <input type="password" name="contrasena_actual" placeholder="Contraseña actual" required
+           style="border-radius: 5px; padding: 5px; width: 250px;">
+    <br><br>
+
+    <input type="password" name="nueva_contrasena" placeholder="Nueva contraseña" required
+           style="border-radius: 5px; padding: 5px; width: 250px;">
+    <br><br>
+
+    <input type="password" name="confirmar_contrasena" placeholder="Confirmar nueva contraseña" required
+           style="border-radius: 5px; padding: 5px; width: 250px;">
+    <br><br>
+
+    <button type="submit">Guardar</button>
+    <br>
+    <button type="button" onclick="cancelarContrasena()">Cancelar</button>
+</form>
+
+<button id="btn-contrasena" onclick="editarContrasena()">Modificar</button>
 
                 <h3><strong>Rol:</strong></h3>
                 <?php
@@ -169,6 +193,17 @@ foreach ($extensiones as $ext) {
             document.getElementById('correo-texto').style.display = 'inline';
             document.getElementById('btn-modificar').style.display = 'inline';
         }
+        function editarContrasena() {
+        document.getElementById('contrasena-texto').style.display = 'none';
+        document.getElementById('btn-contrasena').style.display = 'none';
+        document.getElementById('contrasena-form').style.display = 'inline';
+    }
+
+    function cancelarContrasena() {
+        document.getElementById('contrasena-form').style.display = 'none';
+        document.getElementById('contrasena-texto').style.display = 'inline';
+        document.getElementById('btn-contrasena').style.display = 'inline';
+    }
     </script>
 </body>
 
