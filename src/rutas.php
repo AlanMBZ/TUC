@@ -132,8 +132,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idruta'])) {
             }
             ?>
         </div>
-        <button onclick="Formularioruta()">Solicitar cargar ruta</button>
-
+        <a href="formularioruta.php">
+        <button>Solicitar cargar ruta</button>
+</a>
     </div>
     </div>
 

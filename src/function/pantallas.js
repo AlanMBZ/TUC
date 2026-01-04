@@ -11,7 +11,7 @@ function Ruta(){
     window.open("rutas.php");
 }
 function Formularioruta(){
-    window.open("formularioruta.php");
+    window.open("formularioruta.php", "_self");
 }
 function modificar(){
     window.open("modificarruta.php");

@@ -10,7 +10,7 @@ CREATE TABLE usuario(matricula INT NOT NULL,
 					 fechanacimiento DATE NOT NULL,
 					 rol INT NOT NULL,
 					 credencial NVARCHAR(100) NOT NULL,
-					 estado INT NOT NULL DEFAULT 0,s
+					 estado INT NOT NULL DEFAULT 0,
 					 CONSTRAINT pk_Matricula PRIMARY KEY (matricula))
 
 					 
@@ -163,3 +163,6 @@ CREATE TABLE documentacion(matricula INT NOT NULL,
 						   idvalidacion INT NOT NULL,
 						   CONSTRAINT fk_MatriculaDoc FOREIGN KEY (matricula) REFERENCES usuario(matricula),
 						   CONSTRAINT fk_IdValidacionDoc FOREIGN KEY (idvalidacion) REFERENCES validacion(idvalidacion))
+
+INSERT INTO usuario VALUES (202220001, 'Alan Misael', 'Bazan', 'Zenil', 'alan200470@gmail.com', '12345678', '2004-05-13', 3, 'VALIDADOR', 1)
+					
