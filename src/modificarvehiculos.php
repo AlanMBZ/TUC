@@ -115,7 +115,7 @@ if (!$auto) {
                 <span>Viaje</span>
             </a>
 
-            <a href="formularioruta.php">
+            <a href="rutas.php">
                 <img src="https://cdn-icons-png.flaticon.com/512/599/599129.png">
                 <span>Rutas</span>
             </a>

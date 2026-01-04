@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				$dia_sabado
 			]);
 
-			echo '<script>alert("Ruta registrada exitosamente."); window.location.href = "../formularioruta.php";</script>';
+			echo '<script>alert("Ruta registrada exitosamente."); window.location.href = "../rutas.php";</script>';
 		} catch (Exception $e) {
 			echo '<script>alert("Error al registrar la ruta: ' . addslashes($e->getMessage()) . '"); window.history.back();</script>';
 		}

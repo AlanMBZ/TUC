@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php
+session_start();
+require_once('function/conexion.php');
+$matricula = $_SESSION['matricula'] ?? null;
+$opciones_autos = '';
+if ($matricula) {
+    $conn = Cconexion::ConexionBD();
+    $stmt = $conn->prepare('SELECT c.idconductor FROM conductor c WHERE c.matricula = ?');
+    $stmt->execute([$matricula]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($row) {
+        $idconductor = $row['idconductor'];
+        $stmt2 = $conn->prepare('SELECT placa, modelo, marca FROM autos WHERE idconductor = ?');
+        $stmt2->execute([$idconductor]);
+        while ($auto = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+            $opciones_autos .= '<option value="' . htmlspecialchars($auto['placa']) . '">' . htmlspecialchars($auto['placa']) . ' - ' . htmlspecialchars($auto['marca']) . ' ' . htmlspecialchars($auto['modelo']) . '</option>';
+        }
+    }
+}
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,36 +46,32 @@
         </div>
 
         <script src="function/pantallas.js"></script>
+        <script src="function/pantallas.js"></script>
 
         <div class="menu-links">
-            <a href="inicioconductor.php">
+            <a href="#inicio">
                 <img src="https://marketplace.canva.com/eGqLY/MAGPH-eGqLY/1/tl/canva-round-house-icon-MAGPH-eGqLY.png">
-                <span>Inicio</span>
+                <span onclick="inicio()">Inicio</span>
             </a>
-
-            <a href="perfil.php">
+            <a href="#perfil">
                 <img src="https://cdn-icons-png.flaticon.com/512/848/848006.png">
-                <span>Perfil</span>
+                <span onclick="perfil()">Perfil</span>
             </a>
-
-            <a href="vehiculo.php">
+            <a href="#vehiculos">
                 <img src="https://www.nicepng.com/png/full/89-891434_white-car-icon-png-car-icon-green-png.png">
-                <span>Vehículos</span>
+                <span onclick="vehiculo()">Vehículos</span>
             </a>
-
-            <a href="viajes.php">
+            <a href="#viaje">
                 <img src="https://cdn-icons-png.flaticon.com/512/3731/3731420.png">
-                <span>Viaje</span>
+                <span onclick="viajes()">Viaje</span>
             </a>
-
-            <a href="formularioruta.php">
+            <a href="#ruta">
                 <img src="https://cdn-icons-png.flaticon.com/512/599/599129.png">
-                <span>Rutas</span>
+                <span onclick="Formularioruta()">Rutas</span>
             </a>
-
         </div>
         <div class="menu-links">
-            <a href="login.php" class="logout">
+            <a href="#salir" class="logout">
                 <img src="https://cdn-icons-png.flaticon.com/512/16385/16385164.png">
                 <span>Salir</span>
             </a>
@@ -64,29 +80,6 @@
 
     <div class="card">
         <div class="Tit">
-            <h2>Rutas Registradas</h2>
-            <?php
-            require_once('function/conexion.php');
-            try {
-                $conn = Cconexion::ConexionBD();
-                $stmt = $conn->query('SELECT * FROM rutas ORDER BY idruta DESC');
-                echo '<div style="overflow-x:auto;"><table border="1" cellpadding="5" style="width:100%;background:#fff;">';
-                echo '<tr><th>ID</th><th>ID Conductor</th><th>Punto Salida</th><th>Punto Llegada</th><th>Horario Salida</th></tr>';
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo '<tr>';
-                    echo '<td>' . htmlspecialchars($row['idruta']) . '</td>';
-                    echo '<td>' . htmlspecialchars($row['idconductor']) . '</td>';
-                    echo '<td>' . htmlspecialchars($row['puntosalida']) . '</td>';
-                    echo '<td>' . htmlspecialchars($row['puntollegada']) . '</td>';
-                    echo '<td>' . htmlspecialchars($row['horariosalida']) . '</td>';
-                    echo '</tr>';
-                }
-                echo '</table></div>';
-            } catch (Exception $e) {
-                echo '<p>Error al cargar rutas: ' . htmlspecialchars($e->getMessage()) . '</p>';
-            }
-            ?>
-            <hr style="margin: 30px 0;">
             <h1>REGISTRO DE RUTA</h1>
             <form action="function/registroruta.php" method="POST">
                 <h3>Punto de salida:</h3>
@@ -98,24 +91,7 @@
                 <h3>Auto:</h3>
                 <select name="placa_auto" required>
                     <option value="">Seleccione un auto</option>
-                    <?php
-                    session_start();
-                    $matricula = $_SESSION['matricula'] ?? null;
-                    if ($matricula) {
-                        $conn = Cconexion::ConexionBD();
-                        $stmt = $conn->prepare('SELECT c.idconductor FROM conductor c WHERE c.matricula = ?');
-                        $stmt->execute([$matricula]);
-                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                        if ($row) {
-                            $idconductor = $row['idconductor'];
-                            $stmt2 = $conn->prepare('SELECT placa, modelo, marca FROM autos WHERE idconductor = ?');
-                            $stmt2->execute([$idconductor]);
-                            while ($auto = $stmt2->fetch(PDO::FETCH_ASSOC)) {
-                                echo '<option value="' . htmlspecialchars($auto['placa']) . '">' . htmlspecialchars($auto['placa']) . ' - ' . htmlspecialchars($auto['marca']) . ' ' . htmlspecialchars($auto['modelo']) . '</option>';
-                            }
-                        }
-                    }
-                    ?>
+                    <?php echo $opciones_autos; ?>
                 </select>
                 <h3>Puntos de espera:</h3>
                 <input type="text" name="puntos_espera" placeholder="Ingrese los puntos de espera">
