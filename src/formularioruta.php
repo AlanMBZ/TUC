@@ -89,14 +89,45 @@
             <hr style="margin: 30px 0;">
             <h1>REGISTRO DE RUTA</h1>
             <form action="function/registroruta.php" method="POST">
-                <h3>Ruta:</h3>
-                <input type="text" name="ruta" placeholder="Ingrese la ruta" required>
+                <h3>Punto de salida:</h3>
+                <input type="text" name="puntosalida" placeholder="Ingrese el punto de salida" required>
+                <h3>Punto de llegada:</h3>
+                <input type="text" name="puntollegada" placeholder="Ingrese el punto de llegada" required>
                 <h3>Horario de salida:</h3>
                 <input type="text" name="horariosalida" placeholder="Ingrese la hora de salida" required>
-                <h3>Cupos disponibles:</h3>
-                <input type="text" name="cupos" placeholder="Ingrese NO.pasajeros" required>
-                <h3>Dfirentes puntos de espera:</h3>
+                <h3>Auto:</h3>
+                <select name="placa_auto" required>
+                    <option value="">Seleccione un auto</option>
+                    <?php
+                    session_start();
+                    $matricula = $_SESSION['matricula'] ?? null;
+                    if ($matricula) {
+                        $conn = Cconexion::ConexionBD();
+                        $stmt = $conn->prepare('SELECT c.idconductor FROM conductor c WHERE c.matricula = ?');
+                        $stmt->execute([$matricula]);
+                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                        if ($row) {
+                            $idconductor = $row['idconductor'];
+                            $stmt2 = $conn->prepare('SELECT placa, modelo, marca FROM autos WHERE idconductor = ?');
+                            $stmt2->execute([$idconductor]);
+                            while ($auto = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+                                echo '<option value="' . htmlspecialchars($auto['placa']) . '">' . htmlspecialchars($auto['placa']) . ' - ' . htmlspecialchars($auto['marca']) . ' ' . htmlspecialchars($auto['modelo']) . '</option>';
+                            }
+                        }
+                    }
+                    ?>
+                </select>
+                <h3>Puntos de espera:</h3>
                 <input type="text" name="puntos_espera" placeholder="Ingrese los puntos de espera">
+                <h3>Días:</h3>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <label><input type="checkbox" name="dia_lunes" value="1"> Lunes</label>
+                    <label><input type="checkbox" name="dia_martes" value="1"> Martes</label>
+                    <label><input type="checkbox" name="dia_miercoles" value="1"> Miércoles</label>
+                    <label><input type="checkbox" name="dia_jueves" value="1"> Jueves</label>
+                    <label><input type="checkbox" name="dia_viernes" value="1"> Viernes</label>
+                    <label><input type="checkbox" name="dia_sabado" value="1"> Sábado</label>
+                </div>
                 <br>
                 <button type="submit">Activar ruta</button>
             </form>
