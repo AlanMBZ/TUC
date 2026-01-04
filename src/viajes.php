@@ -61,29 +61,87 @@
             </a>
         </div>
     </aside>
+
+<?php
+require_once('function/conexion.php');
+session_start();
+
+// Procesar solicitud de cupo
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idruta'])) {
+    $matricula = isset($_SESSION['matricula']) ? $_SESSION['matricula'] : null;
+    $nombre = '';
+    if ($matricula) {
+        // Obtener nombre del estudiante
+        $conn = Cconexion::ConexionBD();
+        $stmt = $conn->prepare('SELECT nombres, apellidoP, apellidoM FROM usuario WHERE matricula = ?');
+        $stmt->execute([$matricula]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($user) {
+            $nombre = $user['nombres'] . ' ' . $user['apellidoP'] . ' ' . $user['apellidoM'];
+        }
+    }
+    $ruta = $_POST['puntosalida'] . ' - ' . $_POST['puntollegada'];
+    $idruta = $_POST['idruta'];
+    // Guardar solicitud en la tabla viajes_solicitudes (crear si no existe)
+    $conn = Cconexion::ConexionBD();
+    $conn->query("IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='viajes_solicitudes' AND xtype='U')
+        CREATE TABLE viajes_solicitudes (
+            id INT IDENTITY(1,1) PRIMARY KEY,
+            matricula NVARCHAR(20),
+            nombre NVARCHAR(100),
+            ruta NVARCHAR(200),
+            idruta INT,
+            estado NVARCHAR(20) DEFAULT 'pendiente'
+        )");
+    $stmt = $conn->prepare('INSERT INTO viajes_solicitudes (matricula, nombre, ruta, idruta, estado) VALUES (?, ?, ?, ?, ?)');
+    $stmt->execute([$matricula, $nombre, $ruta, $idruta, 'pendiente']);
+}
+
+// Procesar aceptar/rechazar
+if (isset($_GET['accion']) && isset($_GET['id'])) {
+    $conn = Cconexion::ConexionBD();
+    $estado = ($_GET['accion'] === 'aceptar') ? 'aceptado' : 'rechazado';
+    $stmt = $conn->prepare('UPDATE viajes_solicitudes SET estado = ? WHERE id = ?');
+    $stmt->execute([$estado, $_GET['id']]);
+}
+
+// Mostrar solicitudes
+$conn = Cconexion::ConexionBD();
+$solicitudes = $conn->query('SELECT * FROM viajes_solicitudes ORDER BY id DESC')->fetchAll(PDO::FETCH_ASSOC);
+?>
 <div class="card">
     <div class="Tit">
     <h1>VIAJES</h1>
     <h3>Solicitud de pasajeros</h3>
     <div class="Tabla"></div>
-    <table>
+    <table class="tabla">
         <thead>
             <tr>
-        <th>Matricula</th>
-        <th>Nombre del estudiante</th>
-        <th>Ruta</th>
-        </tr>
+                <th>Matricula</th>
+                <th>Nombre del estudiante</th>
+                <th>Ruta</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
         </thead>
         <tbody>
-            <tr>
-               <td>202220326</td>
-               <td>Alan</td>
-               <td>Ecatepec-TESCO</td>
-               <td><button>Aceptar</button></td>
-               <td><button class="btn-eliminar">Eliminar</button></td>
-            </tr>
+            <?php foreach ($solicitudes as $sol) : ?>
+                <tr>
+                    <td><?= htmlspecialchars($sol['matricula']) ?></td>
+                    <td><?= htmlspecialchars($sol['nombre']) ?></td>
+                    <td><?= htmlspecialchars($sol['ruta']) ?></td>
+                    <td><?= htmlspecialchars($sol['estado']) ?></td>
+                    <td>
+                        <?php if ($sol['estado'] === 'pendiente') : ?>
+                            <a href="?accion=aceptar&id=<?= $sol['id'] ?>" class="btn-editar">Aceptar</a>
+                            <a href="?accion=rechazar&id=<?= $sol['id'] ?>" class="btn-eliminar">Rechazar</a>
+                        <?php else: ?>
+                            ---
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
-
     </table>
     </div>
 </div>

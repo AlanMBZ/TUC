@@ -55,8 +55,45 @@
         <div class="Tit">
             <h1>VIAJES</h1>
         </div>
-    <h3>NO HAY VIAJES EN CURSO</h3>
-    <button onclick="Solicviaje()">Solicitar viaje</button>
+    <?php
+    require_once('../function/conexion.php');
+    session_start();
+    $matricula = isset($_SESSION['matricula']) ? $_SESSION['matricula'] : null;
+    $conn = Cconexion::ConexionBD();
+    $viajes = [];
+    if ($matricula) {
+        $stmt = $conn->prepare('SELECT * FROM viajes_solicitudes WHERE matricula = ? AND estado = ? ORDER BY id DESC');
+        $stmt->execute([$matricula, 'aceptado']);
+        $viajes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    ?>
+    <?php if (count($viajes) === 0): ?>
+        <h3>NO HAY VIAJES EN CURSO</h3>
+    <?php else: ?>
+        <h3>Mis viajes aceptados</h3>
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th>Ruta</th>
+                    <th>Horario</th>
+                    <th>Placa</th>
+                    <th>Puntos de espera</th>
+                    <th>Días</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($viajes as $v): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($v['ruta']) ?></td>
+                        <td><?= isset($v['horariosalida']) ? htmlspecialchars($v['horariosalida']) : '' ?></td>
+                        <td><?= isset($v['placa']) ? htmlspecialchars($v['placa']) : '' ?></td>
+                        <td><?= isset($v['puntos_espera']) ? htmlspecialchars($v['puntos_espera']) : '' ?></td>
+                        <td><?= isset($v['dias']) ? htmlspecialchars($v['dias']) : '' ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
 </div>
 </div>
 </body>
