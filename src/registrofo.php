@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+//Solucion
 if (!isset($_SESSION['matricula']) || !isset($_SESSION['rol'])) {
     header("Location: registro.php");
     exit;
