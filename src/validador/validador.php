@@ -85,7 +85,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </a>
         </div>
         <div class="menu-links">
-            <a href="#salir" class="logout" onclick="salir()">
+            <a href="../login.php" class="logout">
                 <img src="https://cdn-icons-png.flaticon.com/512/16385/16385164.png">
                 <span>Salir</span>
             </a>
