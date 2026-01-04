@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php
+require_once('function/conexion.php');
+session_start();
+// Eliminar ruta si se envió el formulario
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idruta'])) {
+    $idruta = $_POST['idruta'];
+    try {
+        $conn = Cconexion::ConexionBD();
+        $stmt = $conn->prepare('DELETE FROM rutas WHERE idruta = ?');
+        $stmt->execute([$idruta]);
+        echo '<script>alert("Ruta eliminada exitosamente."); window.location.href = "rutas.php";</script>';
+        exit();
+    } catch (Exception $e) {
+        echo '<script>alert("Error al eliminar la ruta: ' . addslashes($e->getMessage()) . '"); window.history.back();</script>';
+        exit();
+    }
+}
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,7 +68,7 @@
                 <span>Viaje</span>
             </a>
 
-            <a href="formularioruta.php">
+            <a href="rutas.php">
                 <img src="https://cdn-icons-png.flaticon.com/512/599/599129.png">
                 <span>Rutas</span>
             </a>
@@ -67,28 +85,55 @@
         <div class="Tit">
             <h1>RUTAS</h1>
             <h3>Rutas ingresadas por el conductor</h3>
-            <div class="Tabla"></div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>RUTA</th>
-                        <th>Horario de salida</th>
-                        <th>Cupos disponibles</th>
-                        <th>Puntos de espera</th>
-                        <th>Auto/Conductor</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-
-                    </tr>
-                </tbody>
-            </table>
+            <?php
+            require_once('function/conexion.php');
+            try {
+                $conn = Cconexion::ConexionBD();
+                $stmt = $conn->query('SELECT * FROM rutas ORDER BY idruta DESC');
+                echo '<div style="overflow-x:auto;"><table border="1" cellpadding="5" style="width:100%;background:#fff;">';
+                echo '<tr>';
+                echo '<th>ID</th>';
+                echo '<th>Punto Salida</th>';
+                echo '<th>Punto Llegada</th>';
+                echo '<th>Horario Salida</th>';
+                echo '<th>Auto (Placa)</th>';
+                echo '<th>Puntos de espera</th>';
+                echo '<th>Días</th>';
+                echo '<th>Acciones</th>';
+                echo '</tr>';
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $dias = [];
+                    if ($row['dia_lunes']) $dias[] = 'Lunes';
+                    if ($row['dia_martes']) $dias[] = 'Martes';
+                    if ($row['dia_miercoles']) $dias[] = 'Miércoles';
+                    if ($row['dia_jueves']) $dias[] = 'Jueves';
+                    if ($row['dia_viernes']) $dias[] = 'Viernes';
+                    if ($row['dia_sabado']) $dias[] = 'Sábado';
+                    echo '<tr>';
+                    echo '<td>' . htmlspecialchars($row['idruta']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['puntosalida']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['puntollegada']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['horariosalida']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['placa']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['puntos_espera']) . '</td>';
+                    echo '<td>' . implode(', ', $dias) . '</td>';
+                    echo '<td class="acciones">';
+                    echo '<a href="modificarruta.php?idruta=' . urlencode($row['idruta']) . '" class="btn-editar">Modificar</a> ';
+                    echo '<form method="POST" action="" style="display:inline;" onsubmit="return confirm(\'¿Seguro que deseas eliminar esta ruta?\');">';
+                    echo '<input type="hidden" name="idruta" value="' . htmlspecialchars($row['idruta']) . '">';
+                    echo '<button type="submit" class="btn-eliminar">Eliminar</button>';
+                    echo '</form>';
+                    echo '</td>';
+                    echo '</tr>';
+                }
+                echo '</table></div>';
+            } catch (Exception $e) {
+                echo '<p>Error al cargar rutas: ' . htmlspecialchars($e->getMessage()) . '</p>';
+            }
+            ?>
         </div>
         <button onclick="Formularioruta()">Solicitar cargar ruta</button>
 
-        <button onclick="modificar()">Modificar</button>
-        <button>Eliminar ruta</button>
     </div>
     </div>
 
