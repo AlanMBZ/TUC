@@ -3,39 +3,40 @@ session_start();
 include_once 'function/conexion.php';
 include_once 'function/validar_login.php';
 
-$mensaje = ""; // ← SIEMPRE definida
+$mensaje = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    // Verificar que existan los datos
     if (isset($_POST['correo'], $_POST['contrasena'])) {
 
         $correo = $_POST['correo'];
         $contrasena = $_POST['contrasena'];
 
-        $usuario = Cvalidar_login::validarUsuario($correo, $contrasena);
+        $resultado = Cvalidar_login::validarUsuario($correo, $contrasena);
 
-        if ($usuario) {
+        if ($resultado['ok']) {
 
-            $_SESSION['matricula'] = $usuario['matricula'];
-            $_SESSION['rol'] = $usuario['rol'];
+            $_SESSION['matricula'] = $resultado['matricula'];
+            $_SESSION['rol'] = $resultado['rol'];
 
-            if ($usuario['rol'] == 1) {
+            if ($resultado['rol'] == 1) {
                 header("Location: inicioconductor.php");
                 exit;
-            } elseif ($usuario['rol'] == 2) {
+            } elseif ($resultado['rol'] == 2) {
                 header("Location: pasajero/inicioPasajero.php");
                 exit;
-            } elseif ($usuario['rol'] == 3) {
+            } elseif ($resultado['rol'] == 3) {
                 header("Location: validador/validador.php");
                 exit;
             }
+
         } else {
-            $mensaje = "Correo o contraseña incorrectos";
+            $mensaje = $resultado['mensaje'];
         }
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
