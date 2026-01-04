@@ -10,6 +10,7 @@ CREATE TABLE usuario(matricula INT NOT NULL,
 					 fechanacimiento DATE NOT NULL,
 					 rol INT NOT NULL,
 					 credencial NVARCHAR(100) NOT NULL,
+					 estado INT NOT NULL DEFAULT 0,s
 					 CONSTRAINT pk_Matricula PRIMARY KEY (matricula))
 
 					 
@@ -29,7 +30,7 @@ INSERT INTO usuario VALUES(202220024,
 						   '2004-05-13',
 						   2,
 						   'CREDENCIAL A INTEGRAR')
-
+						   UPDATE usuario SET estado = 1 WHERE credencial='VALIDADOR'
 SELECT * FROM usuario
 
 
