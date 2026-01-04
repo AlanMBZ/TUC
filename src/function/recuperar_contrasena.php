@@ -61,7 +61,7 @@ try {
     $mail->isHTML(true);
     $mail->Subject = 'Recuperación de contraseña';
     $mail->Body    = "
-        <p>Se ha generado una nueva contraseña para tu cuenta:</p>
+        <p>Se ha generado una nueva contrasena para tu cuenta:</p>
         <h2>$nuevaContrasena</h2>
         <p>Por favor inicia sesion y cambiala.</p>
     ";
