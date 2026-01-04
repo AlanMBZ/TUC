@@ -31,7 +31,29 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="../CSS/Estilos.css">
     <link rel="stylesheet" href="../CSS/Estilotabla.css">
     <link rel="stylesheet" href="../CSS/Estiloinicio.css">
+    <style>
+    .tabla-scroll {
+    max-height: 500px;          /* Ajusta según tu diseño */
+    overflow-y: auto;           /* Scroll vertical */
+    overflow-x: hidden;
+    border-radius: 10px;
+}
 
+/* Opcional: mejora visual del scroll */
+.tabla-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tabla-scroll::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.tabla-scroll::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+    </style>
 
 </head>
 
@@ -77,6 +99,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="card">
             <div class="Tit">
                 <div class="contenedor-centro">
+                    <div class="tabla-scroll">
                     <table class="tabla">
                         <thead>
                             <tr>
