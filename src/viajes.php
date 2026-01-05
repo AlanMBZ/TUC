@@ -63,6 +63,7 @@
     </aside>
 
 <?php
+
 require_once('function/conexion.php');
 session_start();
 
@@ -71,13 +72,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idruta'])) {
     $matricula = isset($_SESSION['matricula']) ? $_SESSION['matricula'] : null;
     $nombre = '';
     if ($matricula) {
-        // Obtener nombre del estudiante
-        $conn = Cconexion::ConexionBD();
-        $stmt = $conn->prepare('SELECT nombres, apellidoP, apellidoM FROM usuario WHERE matricula = ?');
-        $stmt->execute([$matricula]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($user) {
-            $nombre = $user['nombres'] . ' ' . $user['apellidoP'] . ' ' . $user['apellidoM'];
+        // Obtener nombre del pasajero desde la sesión si está disponible
+        if (isset($_SESSION['nombre_pasajero'])) {
+            $nombre = $_SESSION['nombre_pasajero'];
+        } else {
+            $conn = Cconexion::ConexionBD();
+            $stmt = $conn->prepare('SELECT nombres, apellidoP, apellidoM FROM usuario WHERE matricula = ?');
+            $stmt->execute([$matricula]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($user) {
+                $nombre = $user['nombres'] . ' ' . $user['apellidoP'] . ' ' . $user['apellidoM'];
+            }
         }
     }
     $ruta = $_POST['puntosalida'] . ' - ' . $_POST['puntollegada'];
@@ -95,6 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idruta'])) {
         )");
     $stmt = $conn->prepare('INSERT INTO viajes_solicitudes (matricula, nombre, ruta, idruta, estado) VALUES (?, ?, ?, ?, ?)');
     $stmt->execute([$matricula, $nombre, $ruta, $idruta, 'pendiente']);
+    header('Location: pasajero/rutaspasajero.php');
+    exit();
 }
 
 // Procesar aceptar/rechazar

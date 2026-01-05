@@ -61,6 +61,7 @@
             <h1>RUTAS</h1>
             <h3>Rutas ingresadas por el conductor</h3>
             <?php
+            session_start();
             require_once('../function/conexion.php');
             try {
                 $conn = Cconexion::ConexionBD();
@@ -116,6 +117,7 @@
             } catch (Exception $e) {
                 echo '<p>Error al cargar rutas: ' . htmlspecialchars($e->getMessage()) . '</p>';
             }
+            
             ?>
         </div>
 </a>

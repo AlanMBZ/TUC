@@ -56,8 +56,8 @@
             <h1>VIAJES</h1>
         </div>
     <?php
-    require_once('../function/conexion.php');
     session_start();
+    require_once('../function/conexion.php');
     $matricula = isset($_SESSION['matricula']) ? $_SESSION['matricula'] : null;
     $conn = Cconexion::ConexionBD();
     $viajes = [];
