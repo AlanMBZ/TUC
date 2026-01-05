@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once('../function/session_usuariopasajero.php');
 
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 2) {
     header("Location: login.php");
@@ -26,10 +26,10 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 2) {
     <label for="menu-toggle" class="close-btn">×</label>
 
     <div class="user-info">
-        <img src="https://cdn-icons-png.flaticon.com/512/552/552721.png">
+        <img src="<?= $imagenPerfil ?>" alt="Foto de perfil" class="foto-perfil" style="width: 50px; height: 50px; border-radius: 5%; object-fit: cover;">
         <div class="user-text">
-            <span class="user-name">Usuario</span>
-            <span class="user-role">No conectado</span>
+            <span class="user-name">PASAJERO</span>
+            <span class="user-role"><?= htmlspecialchars($nombreUsuario) ?></span>
         </div>
     </div>
 
@@ -114,7 +114,6 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 2) {
                     <p>Fomenta la colaboración y el compañerismo dentro del entorno universitario.</p>
                 </div>
             </div>
-            <button class="btn-hero" onclick="Rutapasajero()">Comenzar viaje</button>
         </section>
 
     </main>
