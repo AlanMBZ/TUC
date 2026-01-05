@@ -77,6 +77,23 @@ if (!$auto) {
 </head>
 
 <body>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const inputs = document.querySelectorAll(
+        'input[type="text"], input[type="email"]'
+    );
+
+    inputs.forEach(input => {
+        input.addEventListener("input", () => {
+            const cursor = input.selectionStart;
+            input.value = input.value.toUpperCase();
+            input.setSelectionRange(cursor, cursor);
+        });
+    });
+
+});
+</script>
 
 <input type="checkbox" id="menu-toggle"/>
 <label for="menu-toggle" class="toggle-btn">☰</label>
