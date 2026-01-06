@@ -22,43 +22,43 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 2) {
     <label for="menu-toggle" class="toggle-btn">☰</label>
 
     <aside class="sidebar">
-    <label for="menu-toggle" class="close-btn">×</label>
+        <label for="menu-toggle" class="close-btn">×</label>
 
-    <div class="user-info">
-<img src="<?= $imagenPerfil ?>" alt="Foto de perfil" class="foto-perfil" style="width: 50px; height: 50px; border-radius: 5%; object-fit: cover;">
-        <div class="user-text">
-            <span class="user-name">PASAJERO</span>
-            <span class="user-role"><?= htmlspecialchars($nombreUsuario) ?></span>
+        <div class="user-info">
+            <img src="<?= $imagenPerfil ?>" alt="Foto de perfil" class="foto-perfil" style="width: 50px; height: 50px; border-radius: 5%; object-fit: cover;">
+            <div class="user-text">
+                <span class="user-name">PASAJERO</span>
+                <span class="user-role"><?= htmlspecialchars($nombreUsuario) ?></span>
+            </div>
         </div>
-    </div>
 
-    <div class="menu-links">
-        <a href="inicioPasajero.php">
-            <img src="https://marketplace.canva.com/eGqLY/MAGPH-eGqLY/1/tl/canva-round-house-icon-MAGPH-eGqLY.png">
-            <span>Inicio</span>
-        </a>
+        <div class="menu-links">
+            <a href="inicioPasajero.php">
+                <img src="https://marketplace.canva.com/eGqLY/MAGPH-eGqLY/1/tl/canva-round-house-icon-MAGPH-eGqLY.png">
+                <span>Inicio</span>
+            </a>
 
-        <a href="perfilpasajero.php">
-            <img src="https://cdn-icons-png.flaticon.com/512/848/848006.png">
-            <span>Perfil</span>
-        </a>
+            <a href="perfilpasajero.php">
+                <img src="https://cdn-icons-png.flaticon.com/512/848/848006.png">
+                <span>Perfil</span>
+            </a>
 
-        <a href="viajepasajero.php">
-            <img src="https://www.nicepng.com/png/full/89-891434_white-car-icon-png-car-icon-green-png.png">
-            <span>Viajes</span>
-        </a>
-        <a href="rutaspasajero.php">
-            <img src="https://cdn-icons-png.flaticon.com/512/599/599129.png">
-            <span>Rutas</span>
-        </a>
-    </div>
-    <div class="menu-links">
-    <a href="../login.php" class="logout">
-        <img src="https://cdn-icons-png.flaticon.com/512/16385/16385164.png">
-        <span>Salir</span>
-    </a>
-    </div>
-</aside>
+            <a href="viajepasajero.php">
+                <img src="https://www.nicepng.com/png/full/89-891434_white-car-icon-png-car-icon-green-png.png">
+                <span>Viajes</span>
+            </a>
+            <a href="rutaspasajero.php">
+                <img src="https://cdn-icons-png.flaticon.com/512/599/599129.png">
+                <span>Rutas</span>
+            </a>
+        </div>
+        <div class="menu-links">
+            <a href="../login.php" class="logout">
+                <img src="https://cdn-icons-png.flaticon.com/512/16385/16385164.png">
+                <span>Salir</span>
+            </a>
+        </div>
+    </aside>
     <main class="content">
 
         <section class="hero">

@@ -1,7 +1,6 @@
 <?php
-session_start();
 require_once('../function/conexion.php');
-
+require_once('../function/session_usuariopasajero.php');
 if (!isset($_SESSION['matricula'])) {
     header("Location: login.php");
     exit;
@@ -53,39 +52,39 @@ foreach ($extensiones as $ext) {
 </head>
 
 <body>
-<script src="direccion.js"></script>
+    <script src="direccion.js"></script>
     <input type="checkbox" id="menu-toggle" />
     <label for="menu-toggle" class="toggle-btn">☰</label>
 
     <aside class="sidebar">
-    <label for="menu-toggle" class="close-btn">×</label>
+        <label for="menu-toggle" class="close-btn">×</label>
 
-    <div class="user-info">
-        <img src="https://cdn-icons-png.flaticon.com/512/552/552721.png">
-        <div class="user-text">
-            <span class="user-name">Usuario</span>
-            <span class="user-role">No conectado</span>
+        <div class="user-info">
+            <img src="<?= $imagenPerfil ?>" alt="Foto de perfil" class="foto-perfil" style="width: 50px; height: 50px; border-radius: 5%; object-fit: cover;">
+            <div class="user-text">
+                <span class="user-name">PASAJERO</span>
+                <span class="user-role"><?= htmlspecialchars($nombreUsuario) ?></span>
+            </div>
         </div>
-    </div>
 
-    <div class="menu-links">
-        <a href="validador.php">
-            <img src="https://marketplace.canva.com/eGqLY/MAGPH-eGqLY/1/tl/canva-round-house-icon-MAGPH-eGqLY.png">
-            <span>Inicio</span>
-        </a>
+        <div class="menu-links">
+            <a href="validador.php">
+                <img src="https://marketplace.canva.com/eGqLY/MAGPH-eGqLY/1/tl/canva-round-house-icon-MAGPH-eGqLY.png">
+                <span>Inicio</span>
+            </a>
 
-        <a href="perfilvalidador.php">
-            <img src="https://cdn-icons-png.flaticon.com/512/848/848006.png">
-            <span>Perfil</span>
-        </a>
-    </div>
-    <div class="menu-links">
-    <a href="#salir" class="logout" onclick="salir()">
-        <img src="https://cdn-icons-png.flaticon.com/512/16385/16385164.png">
-        <span>Salir</span>
-    </a>
-    </div>
-</aside>
+            <a href="perfilvalidador.php">
+                <img src="https://cdn-icons-png.flaticon.com/512/848/848006.png">
+                <span>Perfil</span>
+            </a>
+        </div>
+        <div class="menu-links">
+            <a href="#salir" class="logout" onclick="salir()">
+                <img src="https://cdn-icons-png.flaticon.com/512/16385/16385164.png">
+                <span>Salir</span>
+            </a>
+        </div>
+    </aside>
     <div class="cuadro-principal">
         <div class="Tit">
             <h1>PERFIL</h1>
@@ -127,38 +126,36 @@ foreach ($extensiones as $ext) {
 
                 <button id="btn-modificar" onclick="editarCorreo()">Modificar</button>
 
-<h3><strong>Contraseña:</strong></h3>
+                <h3><strong>Contraseña:</strong></h3>
 
-<span id="contrasena-texto">
-    ********
-</span>
+                <span id="contrasena-texto">
+                    ********
+                </span>
 
-<form id="contrasena-form" action="../function/actualizar_contrasena.php" method="POST" style="display:none;">
-    <input type="password" name="contrasena_actual" placeholder="Contraseña actual" required
-           style="border-radius: 5px; padding: 5px; width: 250px;">
-    <br><br>
+                <form id="contrasena-form" action="../function/actualizar_contrasena.php" method="POST" style="display:none;">
+                    <input type="password" name="contrasena_actual" placeholder="Contraseña actual" required
+                        style="border-radius: 5px; padding: 5px; width: 250px;">
+                    <br><br>
 
-    <input type="password" name="nueva_contrasena" placeholder="Nueva contraseña" required
-           style="border-radius: 5px; padding: 5px; width: 250px;">
-    <br><br>
+                    <input type="password" name="nueva_contrasena" placeholder="Nueva contraseña" required
+                        style="border-radius: 5px; padding: 5px; width: 250px;">
+                    <br><br>
 
-    <input type="password" name="confirmar_contrasena" placeholder="Confirmar nueva contraseña" required
-           style="border-radius: 5px; padding: 5px; width: 250px;">
-    <br><br>
+                    <input type="password" name="confirmar_contrasena" placeholder="Confirmar nueva contraseña" required
+                        style="border-radius: 5px; padding: 5px; width: 250px;">
+                    <br><br>
 
-    <button type="submit">Guardar</button>
-    <br>
-    <button type="button" onclick="cancelarContrasena()">Cancelar</button>
-</form>
+                    <button type="submit">Guardar</button>
+                    <br>
+                    <button type="button" onclick="cancelarContrasena()">Cancelar</button>
+                </form>
 
-<button id="btn-contrasena" onclick="editarContrasena()">Modificar</button>
+                <button id="btn-contrasena" onclick="editarContrasena()">Modificar</button>
 
                 <h3><strong>Rol:</strong></h3>
                 <?php
-                if ($usuario['rol'] == 1) {
-                    echo "Conductor";
-                } else {
-                    echo "Pasajero";
+                if ($usuario['rol'] == 3) {
+                    echo "Validador";
                 } ?>
 
             </div>
@@ -176,17 +173,18 @@ foreach ($extensiones as $ext) {
             document.getElementById('correo-texto').style.display = 'inline';
             document.getElementById('btn-modificar').style.display = 'inline';
         }
-        function editarContrasena() {
-        document.getElementById('contrasena-texto').style.display = 'none';
-        document.getElementById('btn-contrasena').style.display = 'none';
-        document.getElementById('contrasena-form').style.display = 'inline';
-    }
 
-    function cancelarContrasena() {
-        document.getElementById('contrasena-form').style.display = 'none';
-        document.getElementById('contrasena-texto').style.display = 'inline';
-        document.getElementById('btn-contrasena').style.display = 'inline';
-    }
+        function editarContrasena() {
+            document.getElementById('contrasena-texto').style.display = 'none';
+            document.getElementById('btn-contrasena').style.display = 'none';
+            document.getElementById('contrasena-form').style.display = 'inline';
+        }
+
+        function cancelarContrasena() {
+            document.getElementById('contrasena-form').style.display = 'none';
+            document.getElementById('contrasena-texto').style.display = 'inline';
+            document.getElementById('btn-contrasena').style.display = 'inline';
+        }
     </script>
 </body>
 
