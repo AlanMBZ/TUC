@@ -64,7 +64,6 @@ require_once('../function/session_usuariopasajero.php');
             <h1>RUTAS</h1>
             <h3>Rutas ingresadas por el conductor</h3>
             <?php
-            session_start();
             require_once('../function/conexion.php');
             try {
                 $conn = Cconexion::ConexionBD();

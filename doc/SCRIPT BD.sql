@@ -142,6 +142,14 @@ CREATE TABLE viaje(idviaje INT NOT NULL,
 				   CONSTRAINT fk_Placa FOREIGN KEY (placa) REFERENCES autos(placa),
 				   CONSTRAINT fk_Conductor FOREIGN KEY (idconductor) REFERENCES conductor(idconductor))
 
+CREATE TABLE viajes_solicitudes (
+            	id INT IDENTITY(1,1) PRIMARY KEY,
+            	matricula NVARCHAR(20),
+            	nombre NVARCHAR(100),
+            	ruta NVARCHAR(200),
+            	idruta INT,
+            	estado NVARCHAR(20) DEFAULT 'pendiente');
+			
 SELECT * FROM viaje
 
 CREATE TABLE pasajeros(idviaje INT,
