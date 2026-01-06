@@ -62,7 +62,7 @@ foreach ($extensiones as $ext) {
         <div class="user-info">
             <img src="<?= $imagenPerfil ?>" alt="Foto de perfil" class="foto-perfil" style="width: 50px; height: 50px; border-radius: 5%; object-fit: cover;">
             <div class="user-text">
-                <span class="user-name">PASAJERO</span>
+                <span class="user-name">VALIDADOR</span>
                 <span class="user-role"><?= htmlspecialchars($nombreUsuario) ?></span>
             </div>
         </div>
