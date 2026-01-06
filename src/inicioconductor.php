@@ -5,6 +5,39 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
     header("Location: login.php");
     exit;
 }
+
+//-------------------------LLAMADO DE IMAGEN DE PERFIL-------------------------//
+
+//Conexion a la base de datos
+require_once('function/conexion.php');
+
+$conn = Cconexion::ConexionBD();
+
+$matricula = $_SESSION['matricula'];
+
+$sql = "SELECT nombres, apellidoP, apellidoM FROM usuario WHERE matricula = :matricula";
+$stmt = $conn->prepare($sql);
+$stmt->bindParam(':matricula', $matricula, PDO::PARAM_INT);
+$stmt->execute();
+
+$usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$nombreUsuario = $usuario ? $usuario['nombres'] . ' ' . $usuario['apellidoP'] . ' ' . $usuario['apellidoM'] : 'Usuario';
+
+$matricula = $_SESSION['matricula'];
+$directorio = "../img/";
+$extensiones = ['jpg', 'jpeg', 'png'];
+
+$imagenPerfil = $directorio . "default.png"; // Imagen por defecto
+
+foreach ($extensiones as $ext) {
+    $ruta = $directorio . "credencial_" . $matricula . "." . $ext;
+    if (file_exists($ruta)) {
+        $imagenPerfil = $ruta;
+        break;
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -27,10 +60,12 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
         <label for="menu-toggle" class="close-btn">×</label>
 
         <div class="user-info">
-            <img src="https://cdn-icons-png.flaticon.com/512/552/552721.png">
+            
+            <img src="<?= $imagenPerfil ?>" alt="Foto de perfil" class="foto-perfil" style="width: 50px; height: 50px; border-radius: 5%; object-fit: cover;">
             <div class="user-text">
-                <span class="user-name">Usuario</span>
-                <span class="user-role">No conectado</span>
+                <span class="user-name">CONDUCTOR</span>
+                <span class="user-role"><?= htmlspecialchars($nombreUsuario) ?></span>
+
             </div>
         </div>
 
@@ -124,7 +159,6 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
                     <p>Fomenta la colaboración y el compañerismo dentro del entorno universitario.</p>
                 </div>
             </div>
-            <button class="btn-hero" onclick="rutas()">Comenzar viaje</button>
         </section>
 
     </main>

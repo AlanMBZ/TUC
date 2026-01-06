@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
+    header("Location: login.php");
+    exit;
+}
+
 require_once('function/conexion.php');
 
 $conexion = Cconexion::ConexionBD();
@@ -19,6 +26,39 @@ $sql = "SELECT placa, marca, modelo, color, año, tipo, capacidad, fechaalta
 $stmt = $conexion->prepare($sql);
 $stmt->execute();
 $autos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+//FOTO Y NOMBRE DE USUARIO
+$matricula = $_SESSION['matricula'];
+
+$sqlUsuario = "SELECT nombres, apellidoP, apellidoM 
+               FROM usuario 
+               WHERE matricula = :matricula";
+
+$stmtUsuario = $conexion->prepare($sqlUsuario);
+$stmtUsuario->bindParam(':matricula', $matricula, PDO::PARAM_INT);
+$stmtUsuario->execute();
+
+$usuario = $stmtUsuario->fetch(PDO::FETCH_ASSOC);
+
+$nombreUsuario = $usuario
+    ? $usuario['nombres'] . ' ' . $usuario['apellidoP'] . ' ' . $usuario['apellidoM']
+    : 'Usuario';
+
+    $directorio = "../img/";
+$extensiones = ['jpg', 'jpeg', 'png'];
+
+$imagenPerfil = $directorio . "default.png";
+
+foreach ($extensiones as $ext) {
+    $ruta = $directorio . "credencial_" . $matricula . "." . $ext;
+    if (file_exists($ruta)) {
+        $imagenPerfil = $ruta;
+        break;
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -139,10 +179,10 @@ $autos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <label for="menu-toggle" class="close-btn">×</label>
 
         <div class="user-info">
-            <img src="https://cdn-icons-png.flaticon.com/512/552/552721.png">
+            <img src="<?= $imagenPerfil ?>" alt="Foto de perfil" class="foto-perfil" style="width: 50px; height: 50px; border-radius: 5%; object-fit: cover;">
             <div class="user-text">
-                <span class="user-name">Usuario</span>
-                <span class="user-role">No conectado</span>
+                <span class="user-name">CONDUCTOR</span>
+                <span class="user-role"><?= htmlspecialchars($nombreUsuario) ?></span>
             </div>
         </div>
 

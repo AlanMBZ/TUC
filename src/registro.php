@@ -7,6 +7,23 @@
 </head>
 
 <body>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const camposMayusculas = document.querySelectorAll(
+        'input[name="nombre"], input[name="apaterno"], input[name="amaterno"]'
+    );
+
+    camposMayusculas.forEach(input => {
+        input.addEventListener("input", () => {
+            const cursor = input.selectionStart;
+            input.value = input.value.toUpperCase();
+            input.setSelectionRange(cursor, cursor);
+        });
+    });
+
+});
+</script>
 
 <div class="card">
     <div class="Tit">

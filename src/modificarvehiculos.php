@@ -1,5 +1,6 @@
 <?php
 require_once('function/conexion.php');
+require_once('function/session_usuario.php');
 $conexion = Cconexion::ConexionBD();
 
 /* =========================
@@ -60,6 +61,7 @@ $stmt->bindParam(':placa', $placa, PDO::PARAM_STR);
 $stmt->execute();
 $auto = $stmt->fetch(PDO::FETCH_ASSOC);
 
+
 if (!$auto) {
     header("Location: vehiculosrregistrados.php");
     exit;
@@ -77,6 +79,23 @@ if (!$auto) {
 </head>
 
 <body>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const inputs = document.querySelectorAll(
+        'input[type="text"], input[type="email"]'
+    );
+
+    inputs.forEach(input => {
+        input.addEventListener("input", () => {
+            const cursor = input.selectionStart;
+            input.value = input.value.toUpperCase();
+            input.setSelectionRange(cursor, cursor);
+        });
+    });
+
+});
+</script>
 
 <input type="checkbox" id="menu-toggle"/>
 <label for="menu-toggle" class="toggle-btn">☰</label>
@@ -85,10 +104,10 @@ if (!$auto) {
         <label for="menu-toggle" class="close-btn">×</label>
 
         <div class="user-info">
-            <img src="https://cdn-icons-png.flaticon.com/512/552/552721.png">
+            <img src="<?= $imagenPerfil ?>" alt="Foto de perfil" class="foto-perfil" style="width: 50px; height: 50px; border-radius: 5%; object-fit: cover;">
             <div class="user-text">
-                <span class="user-name">Usuario</span>
-                <span class="user-role">No conectado</span>
+                <span class="user-name">CONDUCTOR</span>
+                <span class="user-role"><?= htmlspecialchars($nombreUsuario) ?></span>
             </div>
         </div>
 

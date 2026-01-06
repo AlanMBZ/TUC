@@ -1,3 +1,6 @@
+<?php
+require_once('../function/session_usuariopasajero.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,10 +20,10 @@
     <label for="menu-toggle" class="close-btn">×</label>
 
     <div class="user-info">
-        <img src="https://cdn-icons-png.flaticon.com/512/552/552721.png">
+        <img src="<?= $imagenPerfil ?>" alt="Foto de perfil" class="foto-perfil" style="width: 50px; height: 50px; border-radius: 5%; object-fit: cover;">
         <div class="user-text">
-            <span class="user-name">Usuario</span>
-            <span class="user-role">No conectado</span>
+            <span class="user-name">PASAJERO</span>
+            <span class="user-role"><?= htmlspecialchars($nombreUsuario) ?></span>
         </div>
     </div>
 
@@ -56,13 +59,20 @@
             <h1>VIAJES</h1>
         </div>
     <?php
-    session_start();
     require_once('../function/conexion.php');
     $matricula = isset($_SESSION['matricula']) ? $_SESSION['matricula'] : null;
     $conn = Cconexion::ConexionBD();
     $viajes = [];
     if ($matricula) {
-        $stmt = $conn->prepare('SELECT * FROM viajes_solicitudes WHERE matricula = ? AND estado = ? ORDER BY id DESC');
+        $stmt = $conn->prepare('
+            SELECT vs.*, r.puntosalida, r.puntollegada, r.horariosalida, r.placa, c.idconductor, u.nombres, u.apellidoP, u.apellidoM
+            FROM viajes_solicitudes vs
+            INNER JOIN rutas r ON vs.idruta = r.idruta
+            INNER JOIN conductor c ON r.idconductor = c.idconductor
+            INNER JOIN usuario u ON c.matricula = u.matricula
+            WHERE vs.matricula = ? AND vs.estado = ?
+            ORDER BY vs.id DESC
+        ');
         $stmt->execute([$matricula, 'aceptado']);
         $viajes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -71,28 +81,28 @@
         <h3>NO HAY VIAJES EN CURSO</h3>
     <?php else: ?>
         <h3>Mis viajes aceptados</h3>
-        <table class="tabla">
+        <div class="Tabla" style="width:100%; display:flex; justify-content:center;">
+        <table class="tabla" style="width:80%; margin: 0 auto; border-collapse:collapse;">
             <thead>
-                <tr>
-                    <th>Ruta</th>
-                    <th>Horario</th>
-                    <th>Placa</th>
-                    <th>Puntos de espera</th>
-                    <th>Días</th>
+                <tr style="background:#f2f2f2;">
+                    <th style="padding:10px; border:1px solid #ccc; text-align:center;">Conductor</th>
+                    <th style="padding:10px; border:1px solid #ccc; text-align:center;">Auto/Placa</th>
+                    <th style="padding:10px; border:1px solid #ccc; text-align:center;">Ruta establecida</th>
+                    <th style="padding:10px; border:1px solid #ccc; text-align:center;">Horario de salida</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($viajes as $v): ?>
                     <tr>
-                        <td><?= htmlspecialchars($v['ruta']) ?></td>
-                        <td><?= isset($v['horariosalida']) ? htmlspecialchars($v['horariosalida']) : '' ?></td>
-                        <td><?= isset($v['placa']) ? htmlspecialchars($v['placa']) : '' ?></td>
-                        <td><?= isset($v['puntos_espera']) ? htmlspecialchars($v['puntos_espera']) : '' ?></td>
-                        <td><?= isset($v['dias']) ? htmlspecialchars($v['dias']) : '' ?></td>
+                        <td style="padding:8px; border:1px solid #ccc; text-align:center;"><?= htmlspecialchars($v['nombres'] . ' ' . $v['apellidoP'] . ' ' . $v['apellidoM']) ?></td>
+                        <td style="padding:8px; border:1px solid #ccc; text-align:center;"><?= htmlspecialchars($v['placa']) ?></td>
+                        <td style="padding:8px; border:1px solid #ccc; text-align:center;"><?= htmlspecialchars($v['puntosalida']) ?> - <?= htmlspecialchars($v['puntollegada']) ?></td>
+                        <td style="padding:8px; border:1px solid #ccc; text-align:center;"><?= htmlspecialchars($v['horariosalida']) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
+        </div>
     <?php endif; ?>
 </div>
 </div>
