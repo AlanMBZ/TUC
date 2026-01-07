@@ -84,7 +84,7 @@ require_once('../function/session_usuariopasajero.php');
         <div class="Tabla" style="width:100%; display:flex; justify-content:center;">
         <table class="tabla" style="width:80%; margin: 0 auto; border-collapse:collapse;">
             <thead>
-                <tr style="background:#f2f2f2;">
+                <tr style="background:rgb(24, 142, 42);">
                     <th style="padding:10px; border:1px solid #ccc; text-align:center;">Conductor</th>
                     <th style="padding:10px; border:1px solid #ccc; text-align:center;">Auto/Placa</th>
                     <th style="padding:10px; border:1px solid #ccc; text-align:center;">Ruta establecida</th>
