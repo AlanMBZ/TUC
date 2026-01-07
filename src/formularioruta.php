@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <?php
 session_start();
 require_once('function/conexion.php');
@@ -22,32 +19,48 @@ if ($matricula) {
     }
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ingresar ruta</title>
     <link rel="stylesheet" href="CSS/Estiloinicio.css">
     <link rel="stylesheet" href="CSS/Estilos.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        .card {
+    max-height: 90vh;        /* ocupa casi toda la pantalla */
+    overflow-y: auto;        /* scroll vertical */
+    padding-right: 10px;     /* evita que el scroll tape contenido */
+}
+
+    </style>
+
 </head>
 
 <body>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
 
-    const inputs = document.querySelectorAll(
-        'input[type="text"], input[type="email"]'
-    );
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
 
-    inputs.forEach(input => {
-        input.addEventListener("input", () => {
-            const cursor = input.selectionStart;
-            input.value = input.value.toUpperCase();
-            input.setSelectionRange(cursor, cursor);
+            const inputs = document.querySelectorAll(
+                'input[type="text"], input[type="email"]'
+            );
+
+            inputs.forEach(input => {
+                input.addEventListener("input", () => {
+                    const cursor = input.selectionStart;
+                    input.value = input.value.toUpperCase();
+                    input.setSelectionRange(cursor, cursor);
+                });
+            });
+
         });
-    });
-
-});
-</script>
+    </script>
+   
 
     <input type="checkbox" id="menu-toggle" />
     <label for="menu-toggle" class="toggle-btn">☰</label>
@@ -104,8 +117,13 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="Tit">
             <h1>REGISTRO DE RUTA</h1>
             <form action="function/registroruta.php" method="POST">
+                <!--Mapa-->
                 <h3>Punto de salida:</h3>
-                <input type="text" name="puntosalida" placeholder="Ingrese el punto de salida" required>
+                <input type="text" id="puntoSalida" name="puntosalida"
+                    placeholder="Seleccione un punto en el mapa"
+                    required readonly>
+                <div id="map" style="width: 100%; height: 350px; margin-bottom: 20px;"></div>
+                <!--Mapa-->
                 <h3>Punto de llegada:</h3>
                 <input type="text" name="puntollegada" placeholder="Ingrese el punto de llegada" required>
                 <h3>Horario de salida:</h3>
@@ -131,6 +149,47 @@ document.addEventListener("DOMContentLoaded", () => {
             </form>
         </div>
     </div>
+     <!-- Mapa con Leaflet.js -->
+    <script>
+        const map = L.map('map').setView([19.432608, -99.133209], 13); // CDMX
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        let marker;
+
+        map.on('click', function(e) {
+            const lat = e.latlng.lat;
+            const lng = e.latlng.lng;
+
+            if (marker) {
+                marker.setLatLng(e.latlng);
+            } else {
+                marker = L.marker(e.latlng).addTo(map);
+            }
+
+            obtenerDireccion(lat, lng);
+        });
+
+        function obtenerDireccion(lat, lng) {
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.display_name) {
+                        document.getElementById('puntoSalida').value = data.display_name;
+                    } else {
+                        document.getElementById('puntoSalida').value =
+                            lat.toFixed(6) + ', ' + lng.toFixed(6);
+                    }
+                })
+                .catch(() => {
+                    document.getElementById('puntoSalida').value =
+                        lat.toFixed(6) + ', ' + lng.toFixed(6);
+                });
+        }
+    </script>
+    <!-- Mapa con Leaflet.js -->
 </body>
 
 </html>

@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idruta'])) {
     }
 }
 ?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +28,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idruta'])) {
     <link rel="stylesheet" href="CSS/Estiloinicio.css">
     <link rel="stylesheet" href="CSS/Estilos.css">
     <link rel="stylesheet" href="CSS/Estilotabla.css">
+<style>
+    .tabla-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
 
+.tabla-rutas {
+    width: 90%;
+    max-width: 1200px;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.tabla-rutas th,
+.tabla-rutas td {
+    padding: 14px 12px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+}
+
+.tabla-rutas th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+</style>
 </head>
 
 <body>
@@ -91,7 +121,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idruta'])) {
             try {
                 $conn = Cconexion::ConexionBD();
                 $stmt = $conn->query('SELECT * FROM rutas ORDER BY idruta DESC');
-                echo '<div style="overflow-x:auto;"><table border="1" cellpadding="5" style="width:100%;background:#fff;">';
+                echo '<div class="tabla-wrapper">';
+                echo '<table class="tabla-rutas">';
+
                 echo '<tr>';
                 echo '<th>ID</th>';
                 echo '<th>Punto Salida</th>';
@@ -128,14 +160,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idruta'])) {
                     echo '</tr>';
                 }
                 echo '</table></div>';
+
             } catch (Exception $e) {
                 echo '<p>Error al cargar rutas: ' . htmlspecialchars($e->getMessage()) . '</p>';
             }
             ?>
         </div>
         <a href="formularioruta.php">
-        <button>Solicitar cargar ruta</button>
-</a>
+            <button>Solicitar cargar ruta</button>
+        </a>
     </div>
     </div>
 
