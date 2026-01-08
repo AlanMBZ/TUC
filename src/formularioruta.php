@@ -32,11 +32,13 @@ if ($matricula) {
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         .card {
-    max-height: 90vh;        /* ocupa casi toda la pantalla */
-    overflow-y: auto;        /* scroll vertical */
-    padding-right: 10px;     /* evita que el scroll tape contenido */
-}
-
+            max-height: 90vh;
+            /* ocupa casi toda la pantalla */
+            overflow-y: auto;
+            /* scroll vertical */
+            padding-right: 10px;
+            /* evita que el scroll tape contenido */
+        }
     </style>
 
 </head>
@@ -60,7 +62,7 @@ if ($matricula) {
 
         });
     </script>
-   
+
 
     <input type="checkbox" id="menu-toggle" />
     <label for="menu-toggle" class="toggle-btn">☰</label>
@@ -122,10 +124,18 @@ if ($matricula) {
                 <input type="text" id="puntoSalida" name="puntosalida"
                     placeholder="Seleccione un punto en el mapa"
                     required readonly>
+                    <br>
+                    <p>PULSA UNA VEZ PARA EL PUNTO DE SALIDA Y DE NUEVO PARA EL PUNTO DE LLEGADA</p>
                 <div id="map" style="width: 100%; height: 350px; margin-bottom: 20px;"></div>
-                <!--Mapa-->
+
                 <h3>Punto de llegada:</h3>
-                <input type="text" name="puntollegada" placeholder="Ingrese el punto de llegada" required>
+                <input type="text" id="puntoLlegada" name="puntollegada"
+                    placeholder="Seleccione el punto de llegada en el mapa"
+                    required readonly>
+
+                <button type="button" onclick="resetMapa()">Reiniciar puntos</button>
+
+                <!--Mapa-->
                 <h3>Horario de salida:</h3>
                 <input type="text" name="horariosalida" placeholder="Ingrese la hora de salida" required>
                 <h3>Auto:</h3>
@@ -149,46 +159,86 @@ if ($matricula) {
             </form>
         </div>
     </div>
-     <!-- Mapa con Leaflet.js -->
+    <!-- Mapa con Leaflet.js -->
     <script>
-        const map = L.map('map').setView([19.432608, -99.133209], 13); // CDMX
+    const map = L.map('map').setView([19.6275472,-99.1078738], 13); // CDMX
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
 
-        let marker;
+    let markerSalida = null;
+    let markerLlegada = null;
+    let clickCount = 0;
 
-        map.on('click', function(e) {
-            const lat = e.latlng.lat;
-            const lng = e.latlng.lng;
+    map.on('click', function (e) {
+        const lat = e.latlng.lat;
+        const lng = e.latlng.lng;
 
-            if (marker) {
-                marker.setLatLng(e.latlng);
+        if (clickCount === 0) {
+            // Punto de salida
+            if (markerSalida) {
+                markerSalida.setLatLng(e.latlng);
             } else {
-                marker = L.marker(e.latlng).addTo(map);
+                markerSalida = L.marker(e.latlng, { draggable: false })
+                    .addTo(map)
+                    .bindPopup("Punto de salida")
+                    .openPopup();
             }
 
-            obtenerDireccion(lat, lng);
-        });
+            obtenerDireccion(lat, lng, 'puntoSalida');
+            clickCount = 1;
 
-        function obtenerDireccion(lat, lng) {
-            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data && data.display_name) {
-                        document.getElementById('puntoSalida').value = data.display_name;
-                    } else {
-                        document.getElementById('puntoSalida').value =
-                            lat.toFixed(6) + ', ' + lng.toFixed(6);
-                    }
-                })
-                .catch(() => {
-                    document.getElementById('puntoSalida').value =
-                        lat.toFixed(6) + ', ' + lng.toFixed(6);
-                });
+        } else if (clickCount === 1) {
+            // Punto de llegada
+            if (markerLlegada) {
+                markerLlegada.setLatLng(e.latlng);
+            } else {
+                markerLlegada = L.marker(e.latlng, { draggable: false })
+                    .addTo(map)
+                    .bindPopup("Punto de llegada")
+                    .openPopup();
+            }
+
+            obtenerDireccion(lat, lng, 'puntoLlegada');
+            clickCount = 2;
         }
-    </script>
+    });
+
+    function obtenerDireccion(lat, lng, inputId) {
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.display_name) {
+                    document.getElementById(inputId).value = data.display_name;
+                } else {
+                    document.getElementById(inputId).value =
+                        lat.toFixed(6) + ', ' + lng.toFixed(6);
+                }
+            })
+            .catch(() => {
+                document.getElementById(inputId).value =
+                    lat.toFixed(6) + ', ' + lng.toFixed(6);
+            });
+    }
+
+
+
+    // Reiniciar puntos
+    function resetMapa() {
+    if (markerSalida) map.removeLayer(markerSalida);
+    if (markerLlegada) map.removeLayer(markerLlegada);
+
+    markerSalida = null;
+    markerLlegada = null;
+    clickCount = 0;
+
+    document.getElementById('puntoSalida').value = '';
+    document.getElementById('puntoLlegada').value = '';
+}
+
+</script>
+
     <!-- Mapa con Leaflet.js -->
 </body>
 
