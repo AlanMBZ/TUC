@@ -10,7 +10,30 @@ require_once('function/session_usuario.php');
     <link rel="stylesheet" href="CSS/Estiloinicio.css">
     <link rel="stylesheet" href="CSS/Estilos.css">
     <link rel="stylesheet" href="CSS/Estilotabla.css">
+<style>
+    .tabla-scroll {
+            max-height: 500px;
+            /* Ajusta según tu diseño */
+            overflow-y: auto;
+            /* Scroll vertical */
+            overflow-x: hidden;
+            border-radius: 10px;
+        }
 
+        /* Opcional: mejora visual del scroll */
+        .tabla-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .tabla-scroll::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .tabla-scroll::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+</style>
 </head>
 <body>
     
@@ -119,6 +142,7 @@ $conn = Cconexion::ConexionBD();
 $solicitudes = $conn->query('SELECT * FROM viajes_solicitudes ORDER BY id DESC')->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <div class="card">
+    <div class="tabla-scroll">
     <div class="Tit">
     <h1>VIAJES</h1>
     <h3>Solicitud de pasajeros</h3>
@@ -152,6 +176,7 @@ $solicitudes = $conn->query('SELECT * FROM viajes_solicitudes ORDER BY id DESC')
             <?php endforeach; ?>
         </tbody>
     </table>
+    </div>
     </div>
 </div>
 

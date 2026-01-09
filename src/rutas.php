@@ -56,6 +56,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idruta'])) {
     background-color: #f2f2f2;
     font-weight: bold;
 }
+.tabla-scroll {
+            max-height: 500px;
+            /* Ajusta según tu diseño */
+            overflow-y: auto;
+            /* Scroll vertical */
+            overflow-x: hidden;
+            border-radius: 10px;
+        }
+
+        /* Opcional: mejora visual del scroll */
+        .tabla-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .tabla-scroll::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .tabla-scroll::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
 
 </style>
 </head>
@@ -113,6 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idruta'])) {
         </div>
     </aside>
     <div class="card">
+        <div class="tabla-scroll">
         <div class="Tit">
             <h1>RUTAS</h1>
             <h3>Rutas ingresadas por el conductor</h3>
@@ -165,6 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idruta'])) {
                 echo '<p>Error al cargar rutas: ' . htmlspecialchars($e->getMessage()) . '</p>';
             }
             ?>
+        </div>
         </div>
         <a href="formularioruta.php">
             <button>Solicitar cargar ruta</button>

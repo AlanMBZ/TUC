@@ -12,7 +12,49 @@ require_once('../function/session_usuariopasajero.php');
     <link rel="stylesheet" href="../CSS/Estiloinicio.css">
     <link rel="stylesheet" href="../CSS/Estilos.css">
     <link rel="stylesheet" href="../CSS/Estilotabla.css">
+<style>
+        .tabla-scroll {
+            max-height: 500px;
+            /* Ajusta según tu diseño */
+            overflow-y: auto;
+            /* Scroll vertical */
+            overflow-x: hidden;
+            border-radius: 10px;
+        }
 
+        /* Opcional: mejora visual del scroll */
+        .tabla-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .tabla-scroll::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        .tabla-scroll::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        .tabla-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.tabla-centrada {
+    width: 95%;
+    max-width: 1200px;
+    border-collapse: collapse;
+    table-layout: fixed; /* evita que se salga */
+}
+
+.tabla-centrada th,
+.tabla-centrada td {
+    word-wrap: break-word;
+    text-align: center;
+}
+
+    </style>
 </head>
 
 <body>
@@ -68,8 +110,10 @@ require_once('../function/session_usuariopasajero.php');
             try {
                 $conn = Cconexion::ConexionBD();
                 $stmt = $conn->query('SELECT * FROM rutas ORDER BY idruta DESC');
-                echo '<div style="overflow-x:auto;">';
-                echo '<table class="tabla">';
+                echo '<div class="tabla-scroll">';
+echo '<div class="tabla-wrapper">';
+echo '<table class="tabla tabla-centrada">';
+
                 echo '<thead>';
                 echo '<tr>';
                 echo '<th>ID</th>';
@@ -115,7 +159,9 @@ require_once('../function/session_usuariopasajero.php');
                 }
                 echo '</tbody>';
                 echo '</table>';
-                echo '</div>';
+echo '</div>'; // tabla-wrapper
+echo '</div>'; // tabla-scroll
+
             } catch (Exception $e) {
                 echo '<p>Error al cargar rutas: ' . htmlspecialchars($e->getMessage()) . '</p>';
             }
